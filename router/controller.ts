@@ -1,12 +1,10 @@
 import express from "express";
+import userController from "./services/user/user.controller";
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+router.use("/users", userController);
 
-router.get("/v", (req, res) => {
-  res.send("World!");
+router.get(`*`, (req, res) => {
+  res.status(404).send("Not found!");
 });
-
 export default router;
