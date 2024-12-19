@@ -14,8 +14,7 @@ datasource db {
 }
 
 model User {
-  id       String  @id @default(auto()) @map("_id") @db.ObjectId
-  username String  @unique
+  username String  @id @map("_id")
   image    Bytes
   isPublic Boolean @default(false)
 }
