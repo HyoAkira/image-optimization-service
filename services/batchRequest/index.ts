@@ -5,7 +5,7 @@ import PrismaService from "../prisma/prisma.service";
 
 const prisma = new PrismaService();
 
-function createRandomUser() {
+export function createRandomUser() {
   return {
     username: faker.internet.username(),
   };
