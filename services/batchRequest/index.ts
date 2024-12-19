@@ -12,11 +12,12 @@ export function createRandomUser() {
 }
 
 async function createFakeData() {
-  const foldersPath = join(__dirname, "../../../", "dataset");
+  const foldersPath = join(__dirname, "../../", "dataset");
   const files = readdirSync(foldersPath);
   let counter = 0;
 
   for (const file of files) {
+    if (counter == 25000) return;
     const user = createRandomUser();
     const filePath = join(foldersPath, file);
 
@@ -37,7 +38,7 @@ async function createFakeData() {
     counter++;
   }
 }
-
+createFakeData();
 async function readData() {
   const user = await prisma.user.findUnique({
     where: {

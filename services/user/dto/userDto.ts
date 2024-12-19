@@ -1,6 +1,5 @@
-interface UserDto {
-  id: string;
+export interface UserDto {
   username: string;
-  image: Buffer;
-  isPublic: boolean;
+  image?: Buffer;
+  isPublic?: boolean;
 }

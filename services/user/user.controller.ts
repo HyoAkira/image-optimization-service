@@ -1,61 +1,68 @@
 import express, { NextFunction, Request, Response } from "express";
-import { getUser } from "./user.service";
-import multer, { MulterError } from "multer";
-import { createRandomUser } from "../batchRequest";
-import PrismaService from "../prisma/prisma.service";
+import { createUser, getUser, updateUser } from "./user.service";
+import { uploadHandler } from "@/middlewares/uploadHandler";
+import { error } from "console";
+import { create } from "domain";
 
 const userController = express.Router();
 
-const upload = multer({
-  storage: multer.memoryStorage(),
-  limits: { fileSize: 5242880 }, //5mb
-});
+userController.get("/:username", async (req, res) => {
+  try {
+    const user = await getUser({ username: req.params.username });
 
-const uploadHandler = (req: Request, res: Response, next: NextFunction) => {
-  upload.single("profile")(req, res, function (err) {
-    if (err instanceof MulterError) {
-      return res.status(400).send(`Dosya yükleme hatası: ${err.message}`);
-    } else if (err) {
-      return res.status(500).send(`Bilinmeyen hata: ${err.message}`);
-    }
-    next();
-  });
-};
-const prisma = new PrismaService();
-
-userController.get("/:username", (req, res) => {
-  getUser({ username: req.params.username })
-    .then((user) => {
-      res.setHeader("Content-Type", "image/jpeg");
-      res.send(user.image);
-    })
-    .catch((err) => res.status(404).send("Kullanıcı bulunumadı!"));
+    res.setHeader("Content-Type", "image/jpeg");
+    res.send(user.image);
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
 });
 
 userController.post(
-  "/upload",
+  "/create",
   uploadHandler,
   async function (req: Request, res: Response, next: NextFunction) {
-    const user = createRandomUser();
-
-    if (req.file.fieldname !== "profile") {
-      res.status(404).send("Dosya gerekiyor.");
-      return;
+    if (!req.body.username) {
+      res.status(400).json({ error: "Kullanıcı adı gerekiyor." });
     }
 
     try {
-      await prisma.user.create({
-        data: {
-          username: user.username,
-          image: req.file.buffer,
-        },
+      await createUser({
+        image: req.file.buffer,
+        username: req.body.username,
       });
-      console.log(`Kullanıcı ${user.username} başarıyla oluşturuldu.`);
-      res.redirect(`/users/${user.username}`);
+      console.log(`Kullanıcı ${req.body.username} başarıyla oluşturuldu.`);
+      res.status(201).redirect(`/users/${req.body.username}`);
       return;
     } catch (error) {
-      console.error(`Hata oluştu: ${error}`);
-      next(new Error("Sistem Hatası"));
+      next(error);
+      return;
+    }
+  }
+);
+
+userController.post(
+  "/update",
+  uploadHandler,
+  async function (req: Request, res: Response, next: NextFunction) {
+    if (req.file.fieldname !== "profile") {
+      res.status(400).json({ error: "Dosya gerekiyor." });
+      return;
+    } else if (!req.body.username) {
+      res.status(400).json({ error: "Kullanıcı adı gerekiyor." });
+    }
+
+    try {
+      await updateUser({
+        image: req.file.buffer,
+        username: req.body.username,
+      });
+      console.log(`Kullanıcı ${req.body.username} başarıyla güncellendi.`);
+      res.json({
+        msg: `Kullanıcı ${req.body.username} başarıyla güncellendi.`,
+      });
+      return;
+    } catch (error) {
+      next(error);
       return;
     }
   }
