@@ -37,7 +37,7 @@ userController.post(
   uploadHandler,
   async function (req: Request, res: Response, next: NextFunction) {
     const user = createRandomUser();
-    console.log(req);
+
     if (req.file.fieldname !== "profile") {
       res.status(404).send("Dosya gerekiyor.");
       return;
