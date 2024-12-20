@@ -25,22 +25,17 @@ services:
       - network
 
   mongodb:
-    build:
-      context: ./mongodb_rs
-      dockerfile: ./Dockerfile
-    restart: unless-stopped
-    container_name: mongodb
-    hostname: mongodb
+    image: mongo:8.0
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: pZ5FbOZ50GkZ
-      MONGO_REPLICA_HOST: 0.0.0.0
-      MONGO_REPLICA_PORT: 27017
-      MONGO_COMMAND: "mongosh"
-    volumes:
-      - mongodb:/data/db
     ports:
       - 27017:27017
+    container_name: mongodb
+    hostname: mongodb
+    restart: unless-stopped
+    volumes:
+      - mongodb:/data/db
     networks:
       - network
 
