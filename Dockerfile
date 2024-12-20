@@ -4,11 +4,11 @@ WORKDIR /api
 
 COPY . /api
 
-# RUN yarn
+RUN yarn
 
-# EXPOSE 3000
+EXPOSE 3000
 
-# ENV PORT=3000
+ENV PORT=3000
 
 RUN apk add openssl
 
