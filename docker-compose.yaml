@@ -24,23 +24,36 @@ services:
     networks:
       - network
 
-  mongodb:
-    image: mongo:8.0
+  mongo6:
+    build:
+      context: ./mongodb_rs
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: REDACTED
+      MONGO_REPLICA_HOST: 127.0.0.1
+      MONGO_REPLICA_PORT: 27017
+      # Use "mongo" instead of "mongosh" before v5.0
+      MONGO_COMMAND: "mongosh"
     ports:
-      - 27017:27017
-    container_name: mongodb
-    hostname: mongodb
+      - "27017:27017" # Ensure this is correctly indented as a list item
     restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mongosh",
+          "admin",
+          "--port",
+          "27017",
+          "--eval",
+          "db.adminCommand('ping').ok",
+        ]
+      interval: 5s
+      timeout: 2s
+      retries: 20
     volumes:
-      - mongodb:/data/db
-    networks:
-      - network
+      - mongo:/data/db
 
 volumes:
-  mongodb:
+  mongo:
     driver: local
 
 networks:
