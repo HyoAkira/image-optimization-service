@@ -15,7 +15,6 @@ app.get(`*`, (req, res) => {
   res.status(404).send("Not found!");
 });
 
-
-app.listen(parseInt(process.env.PORT), '0.0.0.0', () => {
+app.listen(3000, "0.0.0.0", () => {
   console.log(`Proje port: ${process.env.PORT}`);
 });
