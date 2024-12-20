@@ -7,6 +7,8 @@
 
 Docker üzerinden mongoDB replicaSet (transaction için gerekli) ayarları yapılmış olarak başlayacak. Port 27017
 
+`npm run migrate` , bu adım mutlaka sistemi başlatmadan önce yapılmalı.
+
 `npm run start|dev`
 Server 3000 portu üzerinde çalışıyor.
 
