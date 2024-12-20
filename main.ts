@@ -1,10 +1,8 @@
-import express, { NextFunction, Request, Response } from "express";
+import express from "express";
 import { config } from "dotenv";
 import router from "./router";
-import PrismaService from "./services/prisma/prisma.service";
-
-import { createRandomUser } from "./services/batchRequest";
 import errorHandler from "./middlewares/errorHandler";
+
 config();
 
 const app = express();
@@ -15,6 +13,6 @@ app.get(`*`, (req, res) => {
   res.status(404).send("Not found!");
 });
 
-app.listen(3000, "0.0.0.0", () => {
+app.listen(+process.env.PORT, "0.0.0.0", () => {
   console.log(`Proje port: ${process.env.PORT}`);
 });
