@@ -27,7 +27,7 @@ services:
   mongo6:
     build:
       context: ./mongodb_rs
-    hostname: mpongodb
+    hostname: mongodb
     container_name: mongodb
     environment:
       MONGO_REPLICA_HOST: 127.0.0.1
