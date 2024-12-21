@@ -4,7 +4,7 @@ services:
     build:
       context: ./mongodb_rs
     environment:
-      MONGO_REPLICA_HOST: 0.0.0.0
+      MONGO_REPLICA_HOST: 127.0.0.1
       MONGO_REPLICA_PORT: 27017
       # Use "mongo" instead of "mongosh" before v5.0
       MONGO_COMMAND: "mongosh"
@@ -49,4 +49,4 @@ services:
 
 networks:
   network:
-    driver: bridge
+    driver: host
