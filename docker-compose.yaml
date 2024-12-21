@@ -1,7 +1,7 @@
 services:
   mongodb:
     image: mongo:latest
-    container_name: mongodb
+    container_name: mongoserver
     # environment: REPLICA SET ACARKEN KOLAYLIK OLMASI ICIN KULLANICIYI SONRADAN ACACAGIM
     #   # - MONGO_INITDB_ROOT_USERNAME=root
     #   # - MONGO_INITDB_ROOT_PASSWORD=rotten
