@@ -2,18 +2,23 @@ services:
   mongodb:
     image: mongo:latest
     container_name: mongoserver
-    # environment: REPLICA SET ACARKEN KOLAYLIK OLMASI ICIN KULLANICIYI SONRADAN ACACAGIM
-    #   # - MONGO_INITDB_ROOT_USERNAME=root
-    #   # - MONGO_INITDB_ROOT_PASSWORD=rotten
     volumes:
       - ./mongodb-data:/data/db
     ports:
       - "27017:27017"
-    command: ["mongod", "--replSet", "rs0"] # MongoDb Replica Set
+    command: ["mongod", "--replSet", "rs0"] # Replica set olarak başlatıyoruz
     networks:
       - network
     healthcheck:
-      test: ["CMD", "mongo", "--eval", "db.runCommand('ping')"]
+      test:
+        [
+          "CMD",
+          "mongo",
+          "--host",
+          "localhost",
+          "--eval",
+          "db.adminCommand('ping')",
+        ]
       interval: 10s
       retries: 5
       start_period: 30s
