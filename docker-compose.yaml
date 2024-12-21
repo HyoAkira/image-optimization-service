@@ -2,9 +2,9 @@ services:
   mongodb:
     image: mongo:latest
     container_name: mongodb
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=rotten
+    # environment: REPLICA SET ACARKEN KOLAYLIK OLMASI ICIN KULLANICIYI SONRADAN ACACAGIM
+    #   # - MONGO_INITDB_ROOT_USERNAME=root
+    #   # - MONGO_INITDB_ROOT_PASSWORD=rotten
     # volumes:
     #   - mongodb-data:/data/db
     ports:
