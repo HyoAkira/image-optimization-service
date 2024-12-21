@@ -6,7 +6,7 @@ WORKDIR /api
 
 COPY package.json ./
 
-RUN npm install
+RUN yarn
 
 COPY . ./
 
@@ -24,5 +24,5 @@ COPY . .
 # ENV PORT=3000
 # ENV DATABASE_URL="mongodb://mongoserver:27017/mondopushtest"
 RUN apk add musl openssl
-RUN npm run migrate
-CMD npm run start
+RUN yarn run migrate
+CMD yarn run start
