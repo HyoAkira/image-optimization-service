@@ -5,8 +5,8 @@ services:
     # environment: REPLICA SET ACARKEN KOLAYLIK OLMASI ICIN KULLANICIYI SONRADAN ACACAGIM
     #   # - MONGO_INITDB_ROOT_USERNAME=root
     #   # - MONGO_INITDB_ROOT_PASSWORD=rotten
-    # volumes:
-    #   - mongodb-data:/data/db
+    volumes:
+      - ./mongodb-data:/data/db
     ports:
       - "27017:27017"
     command: ["mongod", "--replSet", "rs0"] # MongoDB'yi Replica Set olarak başlatıyoruz
