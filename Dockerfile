@@ -23,5 +23,5 @@ COPY . .
 
 ENV PORT=3000
 ENV DATABASE_URL="mongodb://mongoserver:27017/mondopushtest"
-
+ENTRYPOINT npm run migrate
 CMD ["npm", "run", "start"]
