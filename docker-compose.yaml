@@ -1,28 +1,31 @@
 services:
-  mongodb:
-    image: mongo:latest
-    container_name: mongoserver
+  mongo6:
+    build:
+      context: ./mongodb_rs
+    environment:
+      MONGO_REPLICA_HOST: 0.0.0.0
+      MONGO_REPLICA_PORT: 27017
+      # Use "mongo" instead of "mongosh" before v5.0
+      MONGO_COMMAND: "mongosh"
     volumes:
       - ./mongodb-data:/data/db
     ports:
-      - "27017:27017"
-    command: ["mongod", "--replSet", "rs0"] # Replica set olarak başlatıyoruz
-    networks:
-      - network
+      - "27017:27017" # Ensure this is correctly indented as a list item
+    restart: unless-stopped
     healthcheck:
       test:
         [
           "CMD",
-          "mongo",
-          "--host",
-          "localhost",
+          "mongosh",
+          "admin",
+          "--port",
+          "27017",
           "--eval",
-          "db.adminCommand('ping')",
+          "db.adminCommand('ping').ok",
         ]
-      interval: 10s
-      retries: 5
-      start_period: 30s
-      timeout: 10s
+      interval: 5s
+      timeout: 2s
+      retries: 20
   api:
     image: api:1.0.0
     build:
