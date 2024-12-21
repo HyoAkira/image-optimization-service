@@ -27,6 +27,9 @@ services:
       interval: 5s
       timeout: 2s
       retries: 20
+    networks:
+      - network
+
   api:
     image: api:1.0.0
     build:
