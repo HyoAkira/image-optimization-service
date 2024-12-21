@@ -20,6 +20,8 @@ services:
     container_name: api
     hostname: api
     restart: unless-stopped
+    depends_on:
+      - mongoserver
     ports:
       - 3000:3000
     networks:
