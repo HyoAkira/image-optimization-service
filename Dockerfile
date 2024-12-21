@@ -24,5 +24,4 @@ COPY . .
 ENV PORT=3000
 ENV DATABASE_URL="mongodb://mongoserver:27017/mondopushtest"
 RUN apk add musl openssl
-RUN npm run migrate
-CMD ["npm", "run", "start"]
+CMD ["sh", "-c", "npm run migrate && npm run start"]
