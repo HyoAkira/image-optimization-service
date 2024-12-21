@@ -21,7 +21,7 @@ COPY --from=build /api/node_modules /api/node_modules
 
 COPY . .
 
-ENV PORT=3000
-ENV DATABASE_URL="mongodb://mongoserver:27017/mondopushtest"
+# ENV PORT=3000
+# ENV DATABASE_URL="mongodb://mongoserver:27017/mondopushtest"
 RUN apk add musl openssl
-CMD ["sh", "-c", "npm run migrate && npm run start"]
+CMD npm run start
