@@ -24,5 +24,5 @@ COPY . .
 ENV PORT=3000
 ENV DATABASE_URL="mongodb://mongoserver:27017/mondopushtest"
 ENTRYPOINT npm run migrate
-RUN apk add musl
+RUN apk add musl openssl
 CMD ["npm", "run", "start"]
