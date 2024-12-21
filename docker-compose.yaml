@@ -9,9 +9,15 @@ services:
       - ./mongodb-data:/data/db
     ports:
       - "27017:27017"
-    command: ["mongod", "--replSet", "rs0"] # MongoDB'yi Replica Set olarak başlatıyoruz
+    command: ["mongod", "--replSet", "rs0"] # MongoDb Replica Set
     networks:
       - network
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.runCommand('ping')"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
   api:
     image: api:1.0.0
     build:
@@ -20,8 +26,10 @@ services:
     container_name: api
     hostname: api
     restart: unless-stopped
+
     depends_on:
-      - mongodb
+      mongodb:
+        condition: service_healthy # MongoDB'nin sağlık durumu kontrol edilir
     ports:
       - 3000:3000
     networks:
