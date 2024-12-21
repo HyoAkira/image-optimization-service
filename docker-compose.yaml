@@ -13,6 +13,8 @@ services:
     ports:
       - "27017:27017" # Ensure this is correctly indented as a list item
     restart: unless-stopped
+    networks:
+      - network
     healthcheck:
       test:
         [
@@ -27,8 +29,6 @@ services:
       interval: 5s
       timeout: 2s
       retries: 20
-    networks:
-      - network
 
   api:
     image: api:1.0.0
@@ -49,4 +49,4 @@ services:
 
 networks:
   network:
-    driver: host
+    driver: bridge
