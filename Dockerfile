@@ -1,16 +1,16 @@
 FROM node:alpine AS build
 # RUN apk add openssl
 WORKDIR /api
-COPY package.json ./
+COPY package.json .
 RUN yarn
-COPY . ./
+COPY . .
 
 
 FROM node:20-alpine AS final
 EXPOSE 3000
 # RUN apk add openssl
 WORKDIR /api
-COPY --from=build ./api/node_modules ./
+COPY --from=build /api/node_modules .
 ENV PORT=3000
 ENV DATABASE_URL="mongodb://mongodb:27017/mondopushtest"
 
