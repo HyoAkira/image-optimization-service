@@ -12,7 +12,7 @@ EXPOSE 3000
 WORKDIR /api
 COPY --from=build /api/node_modules .
 ENV PORT=3000
-ENV DATABASE_URL="mongodb://mongodb:27017/mondopushtest"
+ENV DATABASE_URL="mongodb://mongoserver:27017/mondopushtest"
 
 
 CMD [ "yarn", "run", "start" ]
