@@ -26,7 +26,6 @@ services:
       dockerfile: ./Dockerfile
     container_name: api
     hostname: api
-    restart: unless-stopped
 
     depends_on:
       mongodb:
