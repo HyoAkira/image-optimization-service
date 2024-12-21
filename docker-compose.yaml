@@ -1,5 +1,6 @@
 services:
-  mongo6:
+  mongodb:
+    container_name: mongoserver
     build:
       context: ./mongodb_rs
     environment:
