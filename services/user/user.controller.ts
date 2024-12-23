@@ -40,7 +40,7 @@ userController.post(
   }
 );
 
-userController.post(
+userController.put(
   "/update",
   uploadHandler,
   async function (req: Request, res: Response, next: NextFunction) {

@@ -1,9 +1,8 @@
 import { basename, join } from "path";
 import fs, { readdirSync, readFileSync, writeFileSync } from "fs";
 import { faker } from "@faker-js/faker";
-import PrismaService from "../prisma/prisma.service";
-
-const prisma = new PrismaService();
+import UserModel from "@/models/Users.model";
+import mongoose from "mongoose";
 
 export function createRandomUser() {
   return {
@@ -17,18 +16,16 @@ async function createFakeData() {
   let counter = 0;
 
   for (const file of files) {
-    if (counter == 25000) return;
+    if (counter == 105000) return;
     const user = createRandomUser();
     const filePath = join(foldersPath, file);
 
     const fileBuffer = readFileSync(filePath);
 
     try {
-      await prisma.user.create({
-        data: {
-          username: user.username,
-          image: fileBuffer,
-        },
+      await UserModel.create({
+        username: user.username,
+        image: fileBuffer,
       });
       console.log(`Kullanıcı ${user.username} başarıyla oluşturuldu.`);
       counter++;
@@ -37,22 +34,8 @@ async function createFakeData() {
     }
   }
 }
-createFakeData();
-async function readData() {
-  const user = await prisma.user.findUnique({
-    where: {
-      username: "Kristina26",
-    },
-    select: {
-      image: true,
-      username: true,
-    },
+mongoose
+  .connect("mongodb://localhost:27017/local?replicaSet=rs0&retryWrites=false")
+  .then(() => {
+    createFakeData();
   });
-  if (!user || !user.image) {
-    console.error("User or image not found");
-    return;
-  }
-
-  const imageBuffer = Buffer.from(user.image);
-  writeFileSync(join(__dirname, "images", `${user.username}.jpg`), imageBuffer);
-}
