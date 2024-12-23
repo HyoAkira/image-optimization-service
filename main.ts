@@ -2,6 +2,7 @@ import express from "express";
 import { config } from "dotenv";
 import router from "./router";
 import errorHandler from "./middlewares/errorHandler";
+import mongoose from "mongoose";
 
 config();
 
@@ -13,6 +14,16 @@ app.get(`*`, (req, res) => {
   res.status(404).send("Not found!");
 });
 
-app.listen(+process.env.PORT, "0.0.0.0", () => {
-  console.log(`Proje port: ${process.env.PORT}`);
-});
+mongoose
+  .connect(
+    process.env.DATABASE_URL ||
+      "mongodb://0.0.0.0:27017/local?retryWrites=false"
+  )
+  .then((x) => {
+    app.listen(+process.env.PORT, "0.0.0.0", () => {
+      console.log(`Proje port: ${process.env.PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  });

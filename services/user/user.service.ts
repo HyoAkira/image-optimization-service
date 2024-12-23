@@ -1,43 +1,41 @@
-import PrismaService from "../prisma/prisma.service";
+import UserModel from "@/models/Users.model";
 import { UserDto } from "./dto/userDto";
-
-const prisma = new PrismaService();
 
 //get
 export async function getAllUsers() {
-  return await prisma.user.findMany();
+  return await UserModel.find({});
 }
 
 export async function createUser({ username, image, isPublic }: UserDto) {
-  const user = prisma.user.create({
-    data: {
+  try {
+    const user = await UserModel.create({
       image: image,
       username: username,
       isPublic: isPublic,
-    },
-  });
+    });
 
-  return user;
+    return user;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 }
 export async function getUser({ username }: Partial<UserDto>) {
-  const user = await prisma.user.findUnique({
-    where: { username },
-  });
+  const user = await UserModel.findOne({ username });
 
   if (!user) throw new Error("Kullanıcı bulunamadı!");
   user.image = Buffer.from(user.image);
   return user;
 }
 export async function updateUser({ username, image, isPublic }: UserDto) {
-  const user = await prisma.user.update({
-    where: {
-      username,
-    },
-    data: {
+  const user = await UserModel.findOneAndUpdate(
+    { username },
+    {
       image,
       isPublic,
     },
-  });
+    { new: true }
+  );
 
   return user;
 }

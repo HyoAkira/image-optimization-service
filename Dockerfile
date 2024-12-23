@@ -6,8 +6,8 @@ WORKDIR /api
 COPY package.json ./
 
 RUN yarn install --frozen-lockfile
-COPY prisma ./prisma
-RUN npx prisma generate --schema=./prisma/schema.prisma
+#COPY prisma ./prisma
+#RUN npx prisma generate --schema=./prisma/schema.prisma
 
 COPY . ./
 
@@ -16,15 +16,15 @@ FROM node:20-alpine AS final
 WORKDIR /api
 
 EXPOSE 3000
-RUN apk add --no-cache g++ 
+#RUN apk add --no-cache g++ 
 COPY --from=build /api/node_modules /api/node_modules
 COPY --from=build /api ./
 
-RUN apk add --no-cache musl openssl
+#RUN apk add --no-cache musl openssl
 #RUN yarn run migrate
 
-#ENV PORT=3000
-#ENV DATABASE_URL="mongodb://mongoserver:27017/mondopushtest"
+ENV PORT=3000
+ENV DATABASE_URL="mongodb://mongoserver:27017/local?retryWrites=false"
 
 CMD ["yarn", "run", "start"]
 

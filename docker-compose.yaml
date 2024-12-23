@@ -2,32 +2,13 @@ version: "3.9"
 services:
   mongodb:
     image: mongo:7.0
-    command: ["--replSet", "rs0", "--bind_ip_all", "--port", "27017"]
     ports:
       - "27017:27017"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-    healthcheck:
-      test: >
-        mongosh --port 27017 --quiet --eval "
-        try {
-          rs.status()
-        } catch (err) {
-          rs.initiate({
-            _id: 'rs0',
-            members: [{_id: 0, host: 'localhost:27017'}]
-          })
-        }"
-      interval: 10s
-      timeout: 30s
-      retries: 5
     container_name: mongoserver
-    hostname: mongoserver
     networks:
       - network
     volumes:
       - mongo1_data:/data/db
-      - mongo1_config:/data/configdb
 
   api:
     image: api:1.0.0
@@ -36,11 +17,8 @@ services:
       dockerfile: ./Dockerfile
     container_name: api
     hostname: api
-    depends_on:
-      mongodb:
-        condition: service_healthy
     ports:
-      - "3000:80"
+      - "3000:3000"
     networks:
       - network
 

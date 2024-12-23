@@ -11,7 +11,7 @@ export default function errorHandler(
   console.error(err.code, err.name);
   console.error(err.stack);
 
-  if (err.code == `P2002`) {
+  if (err.code == `11000`) {
     res.status(400).json({ error: "Bu kullanıcı adı alınmış." });
     return;
   }
