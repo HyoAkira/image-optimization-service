@@ -6,7 +6,7 @@ services:
       - "27017:27017"
     container_name: mongoserver
     networks:
-      - network
+      - mynetwork
     volumes:
       - mongo1_data:/data/db
 
@@ -20,11 +20,11 @@ services:
     ports:
       - "3000:3000"
     networks:
-      - network
+      - mynetwork
 
 networks:
-  network:
-    driver: bridge
+  mynetwork:
+    driver: host
 
 volumes:
   mongo1_data:
