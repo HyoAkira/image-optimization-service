@@ -31,11 +31,10 @@ async function createFakeData() {
         },
       });
       console.log(`Kullanıcı ${user.username} başarıyla oluşturuldu.`);
+      counter++;
     } catch (error) {
       console.error(`Hata oluştu: ${error}`);
     }
-
-    counter++;
   }
 }
 createFakeData();
