@@ -5,8 +5,7 @@ services:
     ports:
       - "27017:27017"
     container_name: mongoserver
-    networks:
-      - host
+    network_mode: host
     volumes:
       - mongo1_data:/data/db
 
@@ -19,9 +18,7 @@ services:
     hostname: api
     ports:
       - "3000:3000"
-    networks:
-      - host
-
+    network_mode: host
 volumes:
   mongo1_data:
   mongo1_config:
