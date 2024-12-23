@@ -22,10 +22,6 @@ services:
     networks:
       - host
 
-networks:
-  host:
-    driver: host
-
 volumes:
   mongo1_data:
   mongo1_config:
