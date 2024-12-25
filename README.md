@@ -21,3 +21,4 @@ MongoDB'de ytsm adıyla veritabanı otomatik açılacak.
 Dataseti aktarmak için MongoDB Compass üzerinden `mongodb://localhost:27017` üzerinden bağlantı yapıldıktan sonra
 ytsm veritabanında yeni collection oluşturduktan sonra "add data" butonuna basıp "import json file" seçilmeli ve dosya
 yüklenmeli.
+a
