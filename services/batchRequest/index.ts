@@ -3,7 +3,7 @@ import fs, { readdirSync, readFileSync, writeFileSync } from "fs";
 import { faker } from "@faker-js/faker";
 import UserModel from "@/models/Users.model";
 import mongoose from "mongoose";
-
+//BU SAYFA LOCALDEN DATASET GONDERMEK ICINDIR SUNUCUDA HICBIR ISLEVI YOK
 export function createRandomUser() {
   return {
     username: faker.internet.username(),
@@ -34,8 +34,6 @@ async function createFakeData() {
     }
   }
 }
-mongoose
-  .connect("mongodb://localhost:27017/local?replicaSet=rs0&retryWrites=false")
-  .then(() => {
-    createFakeData();
-  });
+mongoose.connect("mongodb://0.0.0.0:27017/local?retryWrites=false").then(() => {
+  createFakeData();
+});
