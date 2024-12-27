@@ -7,7 +7,7 @@ import mongoose from "mongoose";
 config();
 
 const app = express();
-app.use(express.json({ limit: "150mb" }));
+app.use(express.json());
 app.get(`/`, (req, res) => {
   res.send("IMG Server");
 });
