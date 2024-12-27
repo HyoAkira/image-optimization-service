@@ -18,5 +18,5 @@ jobs:
         working-directory: ./
 
       - name: Build and Restart Docker Services
-        run: docker compose up --build -d
+        run: docker-compose up --build -d
         working-directory: ./
