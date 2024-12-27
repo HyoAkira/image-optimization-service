@@ -72,13 +72,13 @@ apiController.put(
 
 apiController.post(`/users/`, async (req, res) => {
   const users = await ApiService.getAllUsers();
-  const response = users.map((user) => {
-    return {
-      url: req.hostname + req.url,
-      base64: user.image.toString("base64"),
-    };
-  });
-  res.send(response);
+  // const response = users.map((user) => {
+  //   return {
+  //     url: req.hostname + req.url,
+  //     base64: user.image.toString("base64"),
+  //   };
+  // });
+  res.send(users);
   return;
 });
 export default apiController;
