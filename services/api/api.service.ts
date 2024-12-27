@@ -37,9 +37,9 @@ export default class ApiService {
     return user;
   }
 
-  static async getAllUsers() {
+  static async getUniqueNames(size) {
     try {
-      const users = await UserModel.aggregate([{ $sample: { size: 1000 } }]);
+      const users = await UserModel.aggregate([{ $sample: { size } }]);
       return users;
     } catch (error) {
       console.error(error);
@@ -76,4 +76,17 @@ export default class ApiService {
     }
   }
   static async deleteUser({ username }: UserDto) {}
+
+  static async getAllUsers(userList) {
+    try {
+      const users = await UserModel.find({
+        username: {
+          $in: userList,
+        },
+      });
+      return users;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
