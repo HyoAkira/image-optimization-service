@@ -1,15 +1,28 @@
 import UserModel from "@/models/Users.model";
 import { UserDto } from "./dto/userDto";
+import compressionService from "../compression/compression.service";
 
 //get
 export async function getAllUsers() {
   return await UserModel.find({});
 }
 
-export async function createUser({ username, image, isPublic }: UserDto) {
+export async function createUser({
+  username,
+  file,
+  isPublic,
+}: {
+  username: string;
+  file: Express.Multer.File;
+  isPublic?: boolean;
+}) {
   try {
+    let optimizedImage;
+    if (file.size > 50000) {
+      optimizedImage = await compressionService(file.buffer);
+    }
     const user = await UserModel.create({
-      image: image,
+      image: optimizedImage ?? file.buffer,
       username: username,
       isPublic: isPublic,
     });

@@ -1,8 +1,8 @@
 import express, { NextFunction, Request, Response } from "express";
 import { createUser, getUser, updateUser } from "./user.service";
 import { uploadHandler } from "@/middlewares/uploadHandler";
-import { error } from "console";
-import { create } from "domain";
+import imageValidationMiddleware from "@/middlewares/imageValidation";
+import dataValidationHandler from "@/middlewares/dataValidationHandler";
 
 const userController = express.Router();
 
@@ -19,16 +19,14 @@ userController.get("/:username", async (req, res) => {
 
 userController.post(
   "/create",
-  uploadHandler,
-  async function (req: Request, res: Response, next: NextFunction) {
-    if (!req.body.username) {
-      res.status(400).json({ error: "Kullanıcı adı gerekiyor." });
-    }
 
+  uploadHandler,
+  dataValidationHandler,
+  async function (req: Request, res: Response, next: NextFunction) {
     try {
       await createUser({
-        image: req.file.buffer,
         username: req.body.username,
+        file: req.file,
       });
       console.log(`Kullanıcı ${req.body.username} başarıyla oluşturuldu.`);
       res.status(201).redirect(`/users/${req.body.username}`);
@@ -47,7 +45,8 @@ userController.put(
     if (req.file.fieldname !== "profile") {
       res.status(400).json({ error: "Dosya gerekiyor." });
       return;
-    } else if (!req.body.username) {
+    }
+    if (!req.body.username) {
       res.status(400).json({ error: "Kullanıcı adı gerekiyor." });
     }
 
