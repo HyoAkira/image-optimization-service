@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: test2
+    runs-on:  [ac2 ,test2]
 
     steps:
       - name: Checkout Repository
