@@ -78,6 +78,13 @@ apiController.post(`/users/`, async (req, res) => {
       base64: user.image.toString("base64"),
     };
   });
+  // let response=[];
+  // users.forEach((user) =>
+  //   response.push({
+  //     url: req.hostname + req.url,
+  //     base64: user.image.toString("base64"),
+  //   })
+  // );
   res.send(response);
   return;
 });
