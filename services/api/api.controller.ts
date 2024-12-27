@@ -111,7 +111,6 @@ apiController.post(`/user_urls/`, async (req, res) => {
 
 apiController.post(`/uniqueusers/`, async (req, res) => {
   const usersnames = await ApiService.getUniqueNames(10000);
-
   const userlist = usersnames.map((user) => user.username);
 
   const users = await ApiService.getAllUsers(userlist);
