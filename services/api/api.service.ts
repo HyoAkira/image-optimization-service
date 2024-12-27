@@ -19,8 +19,8 @@ export default class ApiService {
       }
       const user = await UserModel.create({
         image: optimizedImage ?? file.buffer,
-        username: username,
-        isPublic: isPublic,
+        username,
+        isPublic,
       });
 
       return user;
@@ -38,20 +38,42 @@ export default class ApiService {
   }
 
   static async getAllUsers() {
-    return await UserModel.find({});
+    try {
+      const users = await UserModel.find({}).limit(50);
+      return users;
+    } catch (error) {
+      console.error(error);
+    }
   }
 
-  static async updateUser({ username, image, isPublic }: UserDto) {
-    const user = await UserModel.findOneAndUpdate(
-      { username },
-      {
-        image,
-        isPublic,
-      },
-      { new: true }
-    );
+  static async updateUser({
+    username,
+    file,
+    isPublic,
+  }: {
+    username: string;
+    file: Express.Multer.File;
+    isPublic?: boolean;
+  }) {
+    try {
+      let optimizedImage;
+      if (file.size > 50000) {
+        optimizedImage = await compressionService(file.buffer);
+      }
+      const user = await UserModel.updateOne(
+        { username },
+        {
+          image: optimizedImage ?? file.buffer,
+          username,
+          isPublic,
+        }
+      );
 
-    return user;
+      return user;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   }
   static async deleteUser({ username }: UserDto) {}
 }
