@@ -55,7 +55,7 @@ apiController.put(
 
     try {
       await ApiService.updateUser({
-        image: req.file.buffer,
+        file: req.file,
         username: req.body.username,
       });
       console.log(`Kullanıcı ${req.body.username} başarıyla güncellendi.`);
@@ -70,4 +70,15 @@ apiController.put(
   }
 );
 
+apiController.post(`/users/`, async (req, res) => {
+  const users = await ApiService.getAllUsers();
+  const response = users.map((user) => {
+    return {
+      url: req.hostname + req.url,
+      base64: user.image.toString("base64"),
+    };
+  });
+  res.send(response);
+  return;
+});
 export default apiController;
