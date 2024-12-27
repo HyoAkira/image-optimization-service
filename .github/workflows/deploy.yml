@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on:  [ac2 ,test2]
+    runs-on:  self-hosted
 
     steps:
       - name: Checkout Repository
