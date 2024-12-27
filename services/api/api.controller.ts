@@ -1,4 +1,4 @@
-import express, { NextFunction, Request, Response } from "express";
+import express, { NextFunction, Request, response, Response } from "express";
 
 import { uploadHandler } from "@/middlewares/uploadHandler";
 import imageValidationMiddleware from "@/middlewares/imageValidation";
@@ -71,7 +71,8 @@ apiController.put(
 );
 
 apiController.post(`/users/`, async (req, res) => {
-  const users = await ApiService.getAllUsers();
+  const userlist = req.body.usernames;
+  const users = await ApiService.getAllUsers(userlist);
   const response = users.map((user) => {
     return {
       url: req.hostname + req.url + `/${user.username}`,
@@ -88,4 +89,63 @@ apiController.post(`/users/`, async (req, res) => {
   res.send(response);
   return;
 });
+
+apiController.post(`/user_urls/`, async (req, res) => {
+  const userlist = req.body.usernames;
+  const users = await ApiService.getAllUsers(userlist);
+  const response = users.map((user) => {
+    return {
+      url: req.hostname + req.url + `/${user.username}`,
+    };
+  });
+  // let response=[];
+  // users.forEach((user) =>
+  //   response.push({
+  //     url: req.hostname + req.url,
+  //     base64: user.image.toString("base64"),
+  //   })
+  // );
+  res.send(response);
+  return;
+});
+
+apiController.post(`/uniqueusers/`, async (req, res) => {
+  const usersnames = await ApiService.getUniqueNames(1000);
+
+  const userlist = usersnames.map((user) => user.username);
+
+  const users = await ApiService.getAllUsers(userlist);
+  const response = users.map((user) => {
+    return {
+      url: req.hostname + req.url + `/${user.username}`,
+      base64: user.image.toString("base64"),
+    };
+  });
+  // let response=[];
+  // users.forEach((user) =>
+  //   response.push({
+  //     url: req.hostname + req.url,
+  //     base64: user.image.toString("base64"),
+  //   })
+  // );
+  res.send(response);
+  return;
+});
+
+apiController.post(`/getRandomUsernames/`, async (req, res) => {
+  const users = await ApiService.getUniqueNames(1000);
+
+  const namesArray = users.map((user) => user.username);
+
+  res.send(namesArray);
+});
+
+// let response=[];
+// users.forEach((user) =>
+//   response.push({
+//     url: req.hostname + req.url,
+//     base64: user.image.toString("base64"),
+//   })
+// );
+
 export default apiController;
