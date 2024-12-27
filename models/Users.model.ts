@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 
 export const userSchema = new Schema({
   username: { type: Schema.Types.String, unique: true },
-  isPublic: Schema.Types.Boolean,
+  isPublic: { type: Schema.Types.Boolean, default: true },
   image: Schema.Types.Buffer,
 });
 

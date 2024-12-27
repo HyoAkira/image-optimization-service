@@ -7,9 +7,10 @@ import mongoose from "mongoose";
 config();
 
 const app = express();
-
+app.get(`/`, (req, res) => {
+  res.send("IMG Server");
+});
 app.use(`/`, router, errorHandler);
-
 app.get(`*`, (req, res) => {
   res.status(404).send("Not found!");
 });
