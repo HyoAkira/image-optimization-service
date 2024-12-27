@@ -39,7 +39,7 @@ export default class ApiService {
 
   static async getAllUsers() {
     try {
-      const users = await UserModel.find({}).limit(100);
+      const users = await UserModel.find({}).limit(1000);
       return users;
     } catch (error) {
       console.error(error);
