@@ -74,7 +74,7 @@ apiController.post(`/users/`, async (req, res) => {
   const users = await ApiService.getAllUsers();
   const response = users.map((user) => {
     return {
-      url: req.hostname + req.url,
+      url: req.hostname + req.url + `/${user.username}`,
       base64: user.image.toString("base64"),
     };
   });
