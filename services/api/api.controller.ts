@@ -132,7 +132,7 @@ apiController.post(`/uniqueusers/`, async (req, res) => {
 });
 
 apiController.post(`/getRandomUsernames/`, async (req, res) => {
-  const users = await ApiService.getUniqueNames(1000);
+  const users = await ApiService.getUniqueNames(10000);
 
   const namesArray = users.map((user) => user.username);
 
