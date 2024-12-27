@@ -39,10 +39,8 @@ export default class ApiService {
 
   static async getAllUsers() {
     try {
-      const users = await UserModel.find({
-        username: `Kade89`,
-      });
-      return [users];
+      const users = await UserModel.aggregate([{ $sample: { size: 1000 } }]);
+      return users;
     } catch (error) {
       console.error(error);
     }
