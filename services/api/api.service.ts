@@ -1,5 +1,5 @@
-import UserModel from "@/models/Users.model";
-import { UserDto } from "@/services/user/dto/userDto";
+import UserModel, { UserDto } from "@/models/Users.model";
+
 import compressionService from "../compression/compression.service";
 import crypto from "crypto";
 export default class ApiService {
@@ -7,11 +7,8 @@ export default class ApiService {
     username,
     file,
     isPublic,
-  }: {
-    username: string;
-    file: Express.Multer.File;
-    isPublic?: boolean;
-  }) {
+    tckn,
+  }: Partial<UserDto> & { file: Express.Multer.File }) {
     try {
       let optimizedImage;
       if (file.size > 50000) {
@@ -19,13 +16,14 @@ export default class ApiService {
       }
 
       const uuid = crypto.randomUUID();
-      const hash = crypto.createHash("md5").update(uuid).digest("hex");
+      // const hash = crypto.createHash("md5").update(uuid).digest("hex");
 
       const user = await UserModel.create({
         image: optimizedImage ?? file.buffer,
         username,
         isPublic,
-        uuid: hash,
+        tckn,
+        uuid,
       });
 
       return user;
@@ -34,14 +32,27 @@ export default class ApiService {
       throw error;
     }
   }
+  // tckn, uuid ve username ile arar
   static async getUser({ username }: Partial<UserDto>) {
-    const user = await UserModel.findOne({ username });
+    const user = await UserModel.findOne({
+      $or: [
+        {
+          username,
+        },
+        { tckn: username },
+        { uuid: username },
+      ],
+    });
 
     if (!user) throw new Error("Kullanıcı bulunamadı!");
 
     return user;
   }
-
+  static async getUserImageWithUUIDResponse(username) {
+    const user = await this.getUser({ username });
+    user.image = Buffer.from(user.image);
+    return user.image;
+  }
   static async getUniqueNames(size) {
     try {
       const users = await UserModel.aggregate([{ $sample: { size } }]);
@@ -80,7 +91,7 @@ export default class ApiService {
       throw error;
     }
   }
-  static async deleteUser({ username }: UserDto) {}
+  static async deleteUser({}: UserDto) {}
 
   static async getAllUsers(userList) {
     try {
