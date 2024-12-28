@@ -1,7 +1,7 @@
 import UserModel from "@/models/Users.model";
 import { UserDto } from "@/services/user/dto/userDto";
 import compressionService from "../compression/compression.service";
-
+import crypto from "crypto";
 export default class ApiService {
   static async createUser({
     username,
@@ -17,10 +17,15 @@ export default class ApiService {
       if (file.size > 50000) {
         optimizedImage = await compressionService(file.buffer);
       }
+
+      const uuid = crypto.randomUUID();
+      const hash = crypto.createHash("md5").update(uuid).digest("hex");
+
       const user = await UserModel.create({
         image: optimizedImage ?? file.buffer,
         username,
         isPublic,
+        uuid: hash,
       });
 
       return user;
