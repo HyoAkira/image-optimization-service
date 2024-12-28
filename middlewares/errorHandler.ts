@@ -18,9 +18,22 @@ export default function errorHandler(
       break;
     }
     case `LIMIT_UNEXPECTED_FILE`: {
-      res.status(500).json({ error: "Dosya eksik!" });
-
+      res.status(400).json({ error: "Dosya eksik!" });
+      next();
       break;
+    }
+    case `null-apikey`: {
+      res.status(400).send({ error: "Api key eksik!" });
+      next();
+      break;
+    }
+    case "not-allowed-ip": {
+      res.status(400).send({ error: "Yetkilendirme hatasi!" });
+      next();
+    }
+    default: {
+      res.status(500).json({ error: "BILINMEYEN HATA!" });
+      next();
     }
   }
 }
