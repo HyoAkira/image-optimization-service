@@ -3,18 +3,10 @@ import { config } from "dotenv";
 import router from "./router";
 import errorHandler from "./middlewares/errorHandler";
 import mongoose from "mongoose";
-
+import cors from "cors";
 config();
 
 const app = express();
-app.use(express.json({ limit: "150mb" })); // payload error fix
-app.get(`/`, (req, res) => {
-  res.send("IMG Server");
-});
-app.use(`/`, router, errorHandler);
-app.get(`*`, (req, res) => {
-  res.status(404).send("Not found!");
-});
 
 mongoose
   .connect(
@@ -29,3 +21,13 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
+
+app.use(express.json({ limit: "150mb" })); // payload error fix
+
+app.get(`/`, (req, res) => {
+  res.send("IMG Server");
+});
+app.use(`/`, router, errorHandler);
+app.get(`*`, (req, res) => {
+  res.status(404).send("Not found!");
+});

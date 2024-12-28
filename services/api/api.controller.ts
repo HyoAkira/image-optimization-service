@@ -7,14 +7,13 @@ import ApiService from "./api.service";
 
 const apiController = express.Router();
 
-const responseText = (hostname) => {};
-
 apiController.get("/users/:username", async (req, res) => {
   try {
     const user = await ApiService.getUser({ username: req.params.username });
-    console.log(req.originalUrl);
+
     res.send({
-      url: req.hostname + req.url,
+      uuid: user.uuid,
+      url: `${req.protocol}://${req.hostname}${req.baseUrl}/image/${user.uuid}`,
       base64: user.image.toString("base64"),
     });
     return;
@@ -22,7 +21,19 @@ apiController.get("/users/:username", async (req, res) => {
     res.status(404).json({ error: error.message });
   }
 });
+apiController.get("/image/:uuid", async (req, res) => {
+  try {
+    const image = await ApiService.getUserImageWithUUIDResponse(
+      req.params.uuid
+    );
+    res.setHeader("Content-Type", "image/jpeg");
 
+    res.send(image);
+    return;
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
+});
 apiController.post(
   "/create",
 
@@ -30,12 +41,13 @@ apiController.post(
   dataValidationHandler,
   async function (req: Request, res: Response, next: NextFunction) {
     try {
-      await ApiService.createUser({
+      const user = await ApiService.createUser({
         username: req.body.username,
         file: req.file,
       });
       console.log(`Kullanıcı ${req.body.username} başarıyla oluşturuldu.`);
-      res.status(201).redirect(`/users/${req.body.username}`);
+      res.setHeader("Content-Type", "image/jpeg");
+      res.send(user.image);
       return;
     } catch (error) {
       next(error);
@@ -78,7 +90,8 @@ apiController.post(`/users/`, async (req, res) => {
   const users = await ApiService.getAllUsers(userlist);
   const response = users.map((user) => {
     return {
-      url: req.hostname + req.url + `/${user.username}`,
+      uuid: user.uuid,
+      url: `${req.protocol}://${req.hostname}${req.baseUrl}/image/${user.uuid}`,
       base64: user.image.toString("base64"),
     };
   });
@@ -98,7 +111,7 @@ apiController.post(`/user_urls/`, async (req, res) => {
   const users = await ApiService.getAllUsers(userlist);
   const response = users.map((user) => {
     return {
-      url: req.hostname + req.url + `/${user.username}`,
+      url: `${req.protocol}://${req.hostname}${req.baseUrl}/image/${user.uuid}`,
     };
   });
   // let response=[];
@@ -135,7 +148,7 @@ apiController.post(`/uniqueusers/`, async (req, res) => {
 });
 
 apiController.post(`/getRandomUsernames/`, async (req, res) => {
-  const users = await ApiService.getUniqueNames(10000);
+  const users = await ApiService.getUniqueNames(5000);
 
   const namesArray = users.map((user) => user.username);
 
