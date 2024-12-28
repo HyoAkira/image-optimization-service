@@ -8,9 +8,6 @@ export default function errorHandler(
   res: Response,
   next: NextFunction
 ) {
-  console.error(err.code, err.name);
-  console.error(err.stack);
-
   switch (err.code) {
     case 11000: {
       res.status(400).json({ error: "Bu kullanıcı adı alınmış." });
@@ -30,6 +27,7 @@ export default function errorHandler(
     case "not-allowed-ip": {
       res.status(400).send({ error: "Yetkilendirme hatasi!" });
       next();
+      break;
     }
     default: {
       res.status(500).json({ error: "BILINMEYEN HATA!" });

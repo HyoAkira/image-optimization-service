@@ -11,7 +11,10 @@ userController.get("/", async (req, res) => {
 
 userController.get("/:username", async (req, res) => {
   try {
-    const user = await userService.getUser({ username: req.params.username });
+    const user = await userService.getUser({
+      username: req.params.username,
+      req,
+    });
 
     res.setHeader("Content-Type", "image/jpeg");
 
