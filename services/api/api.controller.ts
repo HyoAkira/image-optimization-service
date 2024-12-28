@@ -7,9 +7,12 @@ import ApiService from "./api.service";
 
 const apiController = express.Router();
 
+const responseText = (hostname) => {};
+
 apiController.get("/users/:username", async (req, res) => {
   try {
     const user = await ApiService.getUser({ username: req.params.username });
+    console.log(req.originalUrl);
     res.send({
       url: req.hostname + req.url,
       base64: user.image.toString("base64"),
