@@ -4,6 +4,7 @@ import { uploadHandler } from "@/middlewares/uploadHandler";
 import imageValidationMiddleware from "@/middlewares/imageValidation";
 import dataValidationHandler from "@/middlewares/dataValidationHandler";
 import ApiService from "./api.service";
+import corsValidaton from "@/middlewares/corsValidation";
 
 const apiController = express.Router();
 
@@ -13,7 +14,7 @@ apiController.get("/users/:username", async (req, res) => {
 
     res.send({
       uuid: user.uuid,
-      url: `${req.protocol}://${req.hostname}${req.baseUrl}/image/${user.uuid}`,
+      url: `${req.protocol}://${req.hostname}:${req.socket.localPort}/users/${user.uuid}`,
       base64: user.image.toString("base64"),
     });
     return;
@@ -44,6 +45,7 @@ apiController.post(
       const user = await ApiService.createUser({
         username: req.body.username,
         file: req.file,
+        isPublic: true,
       });
       console.log(`Kullanıcı ${req.body.username} başarıyla oluşturuldu.`);
       res.setHeader("Content-Type", "image/jpeg");
@@ -95,13 +97,7 @@ apiController.post(`/users/`, async (req, res) => {
       base64: user.image.toString("base64"),
     };
   });
-  // let response=[];
-  // users.forEach((user) =>
-  //   response.push({
-  //     url: req.hostname + req.url,
-  //     base64: user.image.toString("base64"),
-  //   })
-  // );
+
   res.send(response);
   return;
 });
@@ -114,13 +110,7 @@ apiController.post(`/user_urls/`, async (req, res) => {
       url: `${req.protocol}://${req.hostname}${req.baseUrl}/image/${user.uuid}`,
     };
   });
-  // let response=[];
-  // users.forEach((user) =>
-  //   response.push({
-  //     url: req.hostname + req.url,
-  //     base64: user.image.toString("base64"),
-  //   })
-  // );
+
   res.send(response);
   return;
 });
@@ -136,13 +126,7 @@ apiController.post(`/uniqueusers/`, async (req, res) => {
       base64: user.image.toString("base64"),
     };
   });
-  // let response=[];
-  // users.forEach((user) =>
-  //   response.push({
-  //     url: req.hostname + req.url,
-  //     base64: user.image.toString("base64"),
-  //   })
-  // );
+
   res.send(response);
   return;
 });
@@ -154,13 +138,5 @@ apiController.post(`/getRandomUsernames/`, async (req, res) => {
 
   res.send(namesArray);
 });
-
-// let response=[];
-// users.forEach((user) =>
-//   response.push({
-//     url: req.hostname + req.url,
-//     base64: user.image.toString("base64"),
-//   })
-// );
 
 export default apiController;
