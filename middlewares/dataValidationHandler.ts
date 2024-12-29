@@ -9,7 +9,7 @@ export default function dataValidationHandler(
   // //fileSize byte olarak geliyor
 
   // console.log(req.file.size);
-
+  console.log(req.route.path);
   try {
     switch (req.route.path) {
       case `/create`: {
@@ -31,6 +31,14 @@ export default function dataValidationHandler(
         if (!req.body.username) {
           throw { code: "null-username-data" };
         }
+        break;
+      }
+      case "/security/create": {
+        if (!req.body.ip) {
+          throw { code: "null-ip-data" };
+        }
+        if (req.body.ip.length < 1) throw { code: "insufficient-ip-length" };
+
         break;
       }
     }

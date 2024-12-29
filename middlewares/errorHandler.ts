@@ -57,10 +57,29 @@ export default function errorHandler(
     }
     case "user-not-exist": {
       res
-        .status(400)
+        .status(404)
         .send({ success: false, message: "Kullanıcı bulunamadı!" });
 
       next();
+      break;
+    }
+    case "null-ip-data": {
+      res.status(400).send({ success: false, message: "ip verisi eksik!" });
+
+      next();
+      break;
+    }
+    case "null-token-data": {
+      res.status(400).send({ success: false, message: "token verisi eksik!" });
+
+      next();
+      break;
+    }
+    case "insufficient-ip-length": {
+      res
+        .status(400)
+        .send({ success: false, message: "En az 1 adet ip adresi girilmeli!" });
+
       break;
     }
     default: {
