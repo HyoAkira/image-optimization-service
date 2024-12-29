@@ -9,18 +9,34 @@ export default function dataValidationHandler(
   // //fileSize byte olarak geliyor
 
   // console.log(req.file.size);
-  console.log(req.route);
-  switch (req.route.path) {
-    case `/create`: {
-      if (req.file.fieldname !== "profile") {
-        res.status(400).json({ error: "Dosya gerekiyor." });
-        return;
+
+  try {
+    switch (req.route.path) {
+      case `/create`: {
+        if (!req.file || req.file?.fieldname !== "profile") {
+          throw { code: "null-profile-data" };
+        }
+        if (!req.body.username) {
+          throw { code: "null-username-data" };
+        }
+        if (!req.body.tckn) {
+          throw { code: "null-tckn-data" };
+        }
+        break;
       }
-      if (!req.body.username) {
-        res.status(400).json({ error: "Kullanıcı adı gerekiyor." });
+      case "/update": {
+        if (!req.file || req.file?.fieldname !== "profile") {
+          throw { code: "null-profile-data" };
+        }
+        if (!req.body.username) {
+          throw { code: "null-username-data" };
+        }
+        break;
       }
-      break;
     }
+  } catch (error) {
+    next(error);
+  } finally {
+    next();
   }
-  next();
 }

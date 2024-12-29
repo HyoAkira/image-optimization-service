@@ -48,11 +48,11 @@ export default class ApiService {
 
     return user;
   }
-  static async getUserImageWithUUIDResponse(username) {
-    const user = await this.getUser({ username });
-    user.image = Buffer.from(user.image);
-    return user.image;
-  }
+  // static async getUserImageWithUUIDResponse(username) {
+  //   const user = await this.getUser({ username });
+  //   user.image = Buffer.from(user.image);
+  //   return user.image;
+  // }
   static async getUniqueNames(size) {
     try {
       const users = await UserModel.aggregate([{ $sample: { size } }]);
@@ -66,24 +66,23 @@ export default class ApiService {
     username,
     file,
     isPublic,
-  }: {
-    username: string;
-    file: Express.Multer.File;
-    isPublic?: boolean;
-  }) {
+    tckn,
+    uuid,
+  }: Partial<UserDto> & { file: Express.Multer.File }) {
     try {
+      const user = await UserModel.findOne({ username });
+      if (!user) throw { code: "user-not-exist" };
       let optimizedImage;
       if (file.size > 50000) {
         optimizedImage = await compressionService(file.buffer);
       }
-      const user = await UserModel.updateOne(
-        { username },
-        {
-          image: optimizedImage ?? file.buffer,
-          username,
-          isPublic,
-        }
-      );
+      await user.updateOne({
+        image: optimizedImage ?? file.buffer,
+        username,
+        isPublic,
+        tckn,
+        uuid,
+      });
 
       return user;
     } catch (error) {
@@ -93,12 +92,26 @@ export default class ApiService {
   }
   static async deleteUser({}: UserDto) {}
 
-  static async getAllUsers(userList) {
+  static async getAllUsers(userList: string[]) {
     try {
       const users = await UserModel.find({
-        username: {
-          $in: userList,
-        },
+        $or: [
+          {
+            username: {
+              $in: userList,
+            },
+          },
+          {
+            tckn: {
+              $in: userList,
+            },
+          },
+          {
+            uuid: {
+              $in: userList,
+            },
+          },
+        ],
       });
       return users;
     } catch (error) {
