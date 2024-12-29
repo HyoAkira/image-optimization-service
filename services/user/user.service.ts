@@ -16,6 +16,9 @@ export default class UserService {
   }) {
     try {
       const user = await UserModel.findOne({ uuid: username });
+      if (!user) {
+        throw { code: "user-not-exist" };
+      }
       const requestIp =
         req.ip || req.headers["x-forwarded-for"] || req.socket.remoteAddress;
       const apikey = req.headers["apikey"];
@@ -31,8 +34,8 @@ export default class UserService {
           return user;
         }
       }
-      if (!user) throw new Error("Kullanıcı bulunamadı!");
-      else if (!user.isPublic) {
+
+      if (!user.isPublic) {
         const blank = readFileSync(
           join(__dirname, `../../assets/images/blankProfile.jpg`)
         );
