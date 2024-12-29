@@ -35,24 +35,11 @@ userController.get("/", async (req, res) => {
  *         description: "Kullanıcının UUID'si"
  *     responses:
  *       200:
- *         description: "Başarılı işlem"
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 uuid:
- *                   type: string
- *                   description: "Kullanıcının UUID'si"
- *                   example: "uuid1234"
- *                 url:
- *                   type: string
- *                   description: "Kullanıcı resmi için erişim URL'si"
- *                   example: "http://example.com/users/uuid1234"
- *                 base64:
- *                   type: string
- *                   description: "Kullanıcı resmi Base64 formatında"
- *                   example: "iVBORw0KGgoAAAANSUhEUgAA..."
+ *        description: "Olumlu yanit!"
+ *       400:
+ *        description: "yetkisiz islem!"
+ *       500:
+ *         description: "Sistem hatasi!"
  */
 userController.get("/:username", async (req, res, next) => {
   try {

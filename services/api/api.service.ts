@@ -2,6 +2,7 @@ import UserModel, { UserDto } from "@/models/Users.model";
 
 import compressionService from "../compression/compression.service";
 import crypto from "crypto";
+import SecurityModel from "@/models/security.model";
 export default class ApiService {
   static async createUser({
     username,
@@ -44,7 +45,7 @@ export default class ApiService {
       ],
     });
 
-    if (!user) throw new Error("Kullanıcı bulunamadı!");
+    if (!user) throw { code: "user-not-exist" };
 
     return user;
   }
@@ -58,7 +59,7 @@ export default class ApiService {
       const users = await UserModel.aggregate([{ $sample: { size } }]);
       return users;
     } catch (error) {
-      console.error(error);
+      throw error;
     }
   }
 
@@ -90,7 +91,20 @@ export default class ApiService {
       throw error;
     }
   }
-  static async deleteUser({}: UserDto) {}
+  static async deleteUser(username) {
+    try {
+      const user = await UserModel.findOneAndDelete({ username });
+      if (!user) {
+        throw { code: "user-not-exist" };
+      }
+      return {
+        success: true,
+        message: `${user.username} basariyla silindi!`,
+      };
+    } catch (error) {
+      throw error;
+    }
+  }
 
   static async getAllUsers(userList: string[]) {
     try {
@@ -115,7 +129,99 @@ export default class ApiService {
       });
       return users;
     } catch (error) {
-      console.error(error);
+      throw error;
+    }
+  }
+
+  static async createCustomerAccount(ip: string[]) {
+    try {
+      const uuid = crypto.randomUUID();
+      const hash = crypto.createHash("md5").update(uuid).digest("hex");
+
+      const account = await SecurityModel.create({
+        ip: ip,
+        token: hash,
+      });
+      return {
+        success: true,
+        message: `başarıyla hesap açıldı!`,
+        data: {
+          token: account.token,
+          ip: account.ip,
+        },
+      };
+    } catch (error) {
+      throw error;
+    }
+  }
+  static async updateCustomerAccount(token: string, ip: string[]) {
+    try {
+      const account = await SecurityModel.findOneAndUpdate(
+        { token },
+        {
+          ip: ip,
+        },
+        { new: true }
+      );
+      if (!account) {
+        throw { code: "user-not-exist" };
+      }
+      return {
+        success: true,
+        message: `başarıyla hesap güncellendi!`,
+        data: {
+          token: account.token,
+          ip: account.ip,
+        },
+      };
+    } catch (error) {
+      throw error;
+    }
+  }
+  static async getCustomerAccount(token: string) {
+    try {
+      const account = await SecurityModel.find(
+        {
+          $or: [
+            { token },
+            {
+              ip: {
+                $in: [token],
+              },
+            },
+          ],
+        },
+        { ip: 1, token: 1 }
+      );
+      if (!account || account.length < 1) {
+        throw { code: "user-not-exist" };
+      }
+      return {
+        success: true,
+        message: `başarıyla hesap verisi alindi`,
+        data: account.map((ac) => {
+          return {
+            token: ac.token,
+            ip: ac.ip,
+          };
+        }),
+      };
+    } catch (error) {
+      throw error;
+    }
+  }
+  static async deleteCustomerAccount(token: string) {
+    try {
+      const account = await SecurityModel.findOneAndDelete({ token });
+      if (!account) {
+        throw { code: "user-not-exist" };
+      }
+      return {
+        success: true,
+        message: `başarıyla hesap silindi!`,
+      };
+    } catch (error) {
+      throw error;
     }
   }
 }

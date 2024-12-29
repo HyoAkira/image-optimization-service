@@ -20,37 +20,12 @@ const apiController = express.Router();
  *         required: true
  *         schema:
  *           type: string
- *         
+ *
  *     responses:
  *       200:
-
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 uuid:
- *                   type: string
- *                   description: "kullanici uuid"
- *                   example: "uuid1234"
- *                 url:
- *                   type: string
- *                   description: "kullanici resim webden erismek icin url"
- *                   example: "http://example.com/users/uuid1234"
- *                 base64:
- *                   type: string
- *                   description: "kullanici resim bas64"
- *                   example: "iVBORw0KGgoAAAANSUhEUgAA..."
- *       404:
- *    
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: string
- *                   example: "Kullanici bulununamadi"
+ *        description: "Olumlu yanit!"
+ *       400:
+ *        description: "yetkisiz islem!"
  *       500:
  *         description: "Sistem hatasi!"
  */
@@ -117,46 +92,11 @@ apiController.get("/users/:username", async (req, res, next) => {
  *                 example: 0001
  *     responses:
  *       200:
- *         description: "Kullanıcı başarıyla oluşturuldu"
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 uuid:
- *                   type: string
- *                   description: "Yeni oluşturulan kullanıcının benzersiz tanımlayıcısı."
- *                   example: "12345"
- *                 username:
- *                   type: string
- *                   description: "Yeni oluşturulan kullanıcının kullanıcı adı."
- *                   example: "john_doe"
- *                 profileImageUrl:
- *                   type: string
- *                   description: "Kullanıcının profil resminin URL'si."
- *                   example: "http://localhost:3000/users/uuid"
+ *        description: "Olumlu yanit!"
  *       400:
- *         description: "Geçersiz istek, eksik veya yanlış parametreler"
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: string
- *                   description: "Geçersiz istek durumunda hata mesajı."
- *                   example: "Gerekli alanlar eksik"
+ *        description: "yetkisiz islem!"
  *       500:
- *         description: "Sunucu içi hata"
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: string
- *                   description: "Sunucu içi hata durumunda hata mesajı."
- *                   example: "Sunucu hatası"
+ *         description: "Sistem hatasi!"
  */
 
 apiController.post(
@@ -215,38 +155,11 @@ apiController.post(
  *                 description: "Kullanıcının yeni profil resmi."
  *     responses:
  *       200:
- *         description: "Kullanıcı başarıyla güncellendi"
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 msg:
- *                   type: string
- *                   description: "Güncelleme işleminin başarı mesajı."
- *                   example: "Kullanıcı john_doe başarıyla güncellendi."
+ *        description: "Olumlu yanit!"
  *       400:
- *         description: "Geçersiz istek, eksik veya yanlış parametreler"
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: string
- *                   description: "Geçersiz istek durumunda hata mesajı."
- *                   example: "Dosya gerekiyor."
+ *        description: "yetkisiz islem!"
  *       500:
- *         description: "Sunucu içi hata"
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: string
- *                   description: "Sunucu içi hata durumunda hata mesajı."
- *                   example: "Sunucu hatası"
+ *         description: "Sistem hatasi!"
  */
 apiController.put(
   "/update",
@@ -299,26 +212,12 @@ apiController.put(
  *                  - "john_doe"
  *                  - "jane_doe"
  *    responses:
- *      '200':
- *        description: "Kullanıcı listesi başarıyla alındı."
- *        content:
- *          application/json:
- *            schema:
- *              type: array
- *              items:
- *                type: object
- *                properties:
- *                  username:
- *                    type: string
- *                    description: "Kullanıcının kullanıcı adı"
- *                  email:
- *                    type: string
- *                    description: "Kullanıcının e-posta adresi"
- *              example:
- *                - username: "john_doe"
- *                  email: "john@example.com"
- *                - username: "jane_doe"
- *                  email: "jane@example.com"
+ *       200:
+ *        description: "Olumlu yanit!"
+ *       400:
+ *        description: "yetkisiz islem!"
+ *       500:
+ *         description: "Sistem hatasi!"
  */
 
 apiController.post(`/users/`, async (req, res, next) => {
@@ -368,24 +267,12 @@ apiController.post(`/users/`, async (req, res, next) => {
  *                - "Dorcas.Weimann16"
  *                - "122ae2e8-4513-4f9c-84d0-d9a8a70c01b3"
  *    responses:
- *      '200':
- *        description: "Başarılı işlem"
- *        content:
- *          application/json:
- *            schema:
- *              type: array
- *              items:
- *                type: object
- *                properties:
- *                  username:
- *                    type: string
- *                    description: "Kullanıcının kullanıcı adı"
- *                  url:
- *                    type: string
- *                    description: "Kullanıcının URL'si"
- *                  uuid:
- *                    type: string
- *                    description: "Kullanıcının UUID'si"
+ *       200:
+ *        description: "Olumlu yanit!"
+ *       400:
+ *        description: "yetkisiz islem!"
+ *       500:
+ *         description: "Sistem hatasi!"
  */
 apiController.post(`/user_urls/`, async (req, res, next) => {
   try {
@@ -412,12 +299,53 @@ apiController.post(`/user_urls/`, async (req, res, next) => {
 });
 /**
  * @swagger
+ * /api/delete/{username}:
+ *   delete:
+ *     tags:
+ *      - api
+ *     summary: "Belirtilen kullanıcıyı siler."
+ *     description: "Bir kullanıcıyı sistemden silmek için kullanılır."
+ *     parameters:
+ *       - in: path
+ *         name: username
+ *         required: true
+ *         description: "Silinecek kullanıcının kullanıcı adı"
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: "Başarılı işlem. Kullanıcı silindi."
+ *       400:
+ *         description: "Geçersiz kullanıcı adı veya eksik bilgi."
+ *       404:
+ *         description: "Kullanıcı bulunamadı."
+ *       500:
+ *         description: "Sunucu hatası."
+ */
+apiController.delete("/delete/:username", async (req, res, next) => {
+  try {
+    const response = await ApiService.deleteUser(req.params.username);
+    res.send(response);
+  } catch (error) {
+    next(error);
+  }
+  return;
+});
+/**
+ * @swagger
  * /api/uniqueusers/{uuid}:
  *   get:
  *     tags:
  *      - api
  *     summary: "rastgele 1000 kullanıcı verir."
  *     description: "2 tane büyük işlem içerdiği için uzun sürer!"
+ *     responses:
+ *       200:
+ *        description: "Olumlu yanit!"
+ *       400:
+ *        description: "yetkisiz islem!"
+ *       500:
+ *         description: "Sistem hatasi!"
  */
 apiController.get(`/uniqueusers/`, async (req, res, next) => {
   try {
@@ -450,6 +378,13 @@ apiController.get(`/uniqueusers/`, async (req, res, next) => {
  *    tags:
  *      - api
  *    summary: "rastgele 1000 kullanici adi verir"
+ *    responses:
+ *       200:
+ *        description: "Olumlu yanit!"
+ *       400:
+ *        description: "yetkisiz islem!"
+ *       500:
+ *         description: "Sistem hatasi!"
  */
 apiController.get(`/getrandomusernames/`, async (req, res, next) => {
   try {
@@ -461,6 +396,159 @@ apiController.get(`/getrandomusernames/`, async (req, res, next) => {
   } catch (error) {
     next(error);
     return;
+  }
+});
+
+/**
+ * @swagger
+ * /api/security/{token}:
+ *  get:
+ *    tags:
+ *      - security
+ *    summary: "token veya ip ile bilgi cekmeye yarar"
+ *    description: "Aynı ip birden fazla tokene ait olabileceği için çıktı değeri dizi olarak döner"
+ *    parameters:
+ *      - in: path
+ *        name: token
+ *        required: true
+ *        description: "token veya ip ile bilgi çekmeye yarar"
+ *        schema:
+ *          type: string
+ *    responses:
+ *       200:
+ *        description: "Olumlu yanit!"
+ *       400:
+ *        description: "yetkisiz islem!"
+ *       500:
+ *         description: "Sistem hatasi!"
+ */
+apiController.get("/security/:token", async (req, res, next) => {
+  try {
+    console.log(req.params.token);
+    const response = await ApiService.getCustomerAccount(req.params.token);
+    res.send(response);
+    return;
+  } catch (error) {
+    next(error);
+  }
+});
+/**
+ * @swagger
+ * /api/security/create:
+ *  post:
+ *    tags:
+ *      - security
+ *    summary: "yeni token hesabi acar"
+ *    description: "Yeni token hesabı açar, token otomatik generate olur. Kullanıcı ip set eder."
+ *    requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               ip:
+ *                 type: array
+ *                 items:
+ *                  type: string
+ *                 description: "Set edilecek ip listesi"
+ *                 example:
+ *                  - 127.0.0.1
+ *    responses:
+ *       200:
+ *        description: "Olumlu yanit!"
+ *       400:
+ *        description: "yetkisiz islem!"
+ *       500:
+ *         description: "Sistem hatasi!"
+ */
+apiController.post(
+  "/security/create",
+  dataValidationHandler,
+  async (req, res, next) => {
+    try {
+      const response = await ApiService.createCustomerAccount(req.body.ip);
+      res.send(response);
+      return;
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+/**
+ * @swagger
+ * /api/security/update:
+ *  patch:
+ *    tags:
+ *      - security
+ *    summary: "ip set guncelleme"
+ *    description: "Kullanıcı ip'ler set eder, apikey token olarak kullanilir."
+ *    requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               ip:
+ *                 type: array
+ *                 items:
+ *                  type: string
+ *                 description: "Set edilecek ip listesi"
+ *                 example:
+ *                  - 127.0.0.1
+ *    responses:
+ *       200:
+ *        description: "Olumlu yanit!"
+ *       400:
+ *        description: "yetkisiz islem!"
+ *       500:
+ *         description: "Sistem hatasi!"
+ */
+apiController.patch("/security/update", async (req, res, next) => {
+  try {
+    const apikey = req.headers["apikey"] as unknown as string;
+    const response = await ApiService.updateCustomerAccount(
+      apikey,
+      req.body.ip
+    );
+    res.send(response);
+    return;
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
+ * @swagger
+ * /api/security/{token}:
+ *  delete:
+ *    tags:
+ *      - security
+ *    summary: "token ile hesap siler"
+ *    description: "Aynı ip birden fazla tokene ait olabileceği için çıktı değeri dizi olarak döner"
+ *    parameters:
+ *      - in: path
+ *        name: token
+ *        required: true
+ *        description: "token veya ip ile bilgi çekmeye yarar"
+ *        schema:
+ *          type: string
+ *    responses:
+ *       200:
+ *        description: "Olumlu yanit!"
+ *       400:
+ *        description: "yetkisiz islem!"
+ *       500:
+ *         description: "Sistem hatasi!"
+ */
+apiController.delete("/security/:token", async (req, res, next) => {
+  try {
+    const response = await ApiService.deleteCustomerAccount(req.params.token);
+    res.send(response);
+    return;
+  } catch (error) {
+    next(error);
   }
 });
 
