@@ -1,17 +1,17 @@
 
-FROM node:20-alpine AS build
+FROM node:alpine AS build
 
 WORKDIR /api
 
 COPY package.json ./
 
-RUN yarn install --frozen-lockfile
+RUN yarn install
 #COPY prisma ./prisma
 #RUN npx prisma generate --schema=./prisma/schema.prisma
 
 COPY . ./
 
-FROM node:20-alpine AS final
+FROM node:alpine AS final
 
 WORKDIR /api
 

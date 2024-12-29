@@ -6,7 +6,7 @@ import { join } from "path";
 
 const options: swaggerJSDoc.Options = {
   definition: {
-    openapi: "3.0.0",
+    openapi: version,
     info: {
       title: "IMG BILECIK",
       version,
@@ -28,18 +28,18 @@ Eğer kullanıcı ayarlarında isPublic property değeri false ve yetkilendirilm
         ApiKeyAuth: {
           type: "apiKey",
           in: "header",
-          name: "apikey", // Header'da aranacak anahtar
+          name: "apikey",
           description: "API key required for authentication",
         },
       },
     },
     security: [
       {
-        ApiKeyAuth: [], // Tüm rotalarda ApiKeyAuth gerekliliğini etkinleştirir
+        ApiKeyAuth: [],
       },
     ],
   },
-  apis: ["../**/*.controller.ts"], // Annotasyon içeren dosyalar
+  apis: [join(__dirname, "../**/*.controller.ts")],
 };
 
 const openapiSpecification = swaggerJSDoc(options);
