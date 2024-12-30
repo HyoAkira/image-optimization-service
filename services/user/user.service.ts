@@ -20,7 +20,7 @@ export default class UserService {
         throw { code: "user-not-exist" };
       }
       const requestIp =
-        req.ip || req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+        req.headers["x-forwarded-for"] || req.ip || req.socket.remoteAddress;
       const apikey = req.headers["apikey"];
       if (apikey) {
         const allowedIp = await SecurityModel.findOne({
