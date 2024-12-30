@@ -9,5 +9,5 @@ export const userSchema = new Schema({
 });
 export type UserDto = InferSchemaType<typeof userSchema>;
 
-const UserModel = model("denemetest", userSchema);
+const UserModel = model("users", userSchema);
 export default UserModel;
