@@ -6,7 +6,7 @@ import { join } from "path";
 
 const options: swaggerJSDoc.Options = {
   definition: {
-    openapi: version,
+    openapi: `3.0.0`,
     info: {
       title: "IMG BILECIK",
       version,
