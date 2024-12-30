@@ -1,6 +1,7 @@
 import SecurityModel from "@/models/security.model";
 
 export default async function docsIPValidation(req, next) {
+  console.log(`${req.ip} adresinden istek geldi! /docs`);
   const requestIp =
     req.ip || req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
