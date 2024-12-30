@@ -136,8 +136,8 @@ apiController.post(
  *   put:
  *     tags:
  *      - api
- *     summary: "Mevcut kullanıcıyı güncelle"
- *     description: "Kullanıcı adı ve profil resmi ile mevcut kullanıcıyı günceller."
+ *     summary: "Mevcut kullanıcıyı güncelle, sadece username"
+ *     description: "Kullanıcı adı ile mevcut kullanıcıyı günceller."
  *     requestBody:
  *       required: true
  *       content:
@@ -149,17 +149,25 @@ apiController.post(
  *                 type: string
  *                 description: "Güncellenmek istenen kullanıcının kullanıcı adı."
  *                 example: "john_doe"
+ *               tckn:
+ *                 type: string
+ *                 description: "Güncellenmek istenen kullanıcının tckn verisi."
+ *                 example: "11111111111"
+ *               isPublic:
+ *                 type: boolean
+ *                 description: "urlden girince herkese açık olsun mu?"
+ *                 example: true
  *               profile:
  *                 type: string
  *                 format: binary
  *                 description: "Kullanıcının yeni profil resmi."
  *     responses:
  *       200:
- *        description: "Olumlu yanit!"
+ *         description: "Olumlu yanıt!"
  *       400:
- *        description: "yetkisiz islem!"
+ *         description: "Yetkisiz işlem!"
  *       500:
- *         description: "Sistem hatasi!"
+ *         description: "Sistem hatası!"
  */
 apiController.put(
   "/update",
@@ -195,7 +203,7 @@ apiController.put(
  *  post:
  *    tags:
  *      - api
- *    summary: "Liste ile kullanıcı verisi al"
+ *    summary: "Liste ile kullanıcı verisi al (username/tckn/uuid çalışır)"
  *    requestBody:
  *      required: true
  *      content:
@@ -303,7 +311,7 @@ apiController.post(`/user_urls/`, async (req, res, next) => {
  *   delete:
  *     tags:
  *      - api
- *     summary: "Belirtilen kullanıcıyı siler."
+ *     summary: "Belirtilen kullanıcıyı siler. sadece username"
  *     description: "Bir kullanıcıyı sistemden silmek için kullanılır."
  *     parameters:
  *       - in: path
@@ -521,19 +529,12 @@ apiController.patch("/security/update", async (req, res, next) => {
 
 /**
  * @swagger
- * /api/security/{token}:
+ * /api/security/:
  *  delete:
  *    tags:
  *      - security
  *    summary: "token ile hesap siler"
  *    description: "Aynı ip birden fazla tokene ait olabileceği için çıktı değeri dizi olarak döner"
- *    parameters:
- *      - in: path
- *        name: token
- *        required: true
- *        description: "token veya ip ile bilgi çekmeye yarar"
- *        schema:
- *          type: string
  *    responses:
  *       200:
  *        description: "Olumlu yanit!"
@@ -542,9 +543,10 @@ apiController.patch("/security/update", async (req, res, next) => {
  *       500:
  *         description: "Sistem hatasi!"
  */
-apiController.delete("/security/:token", async (req, res, next) => {
+apiController.delete("/security/", async (req, res, next) => {
   try {
-    const response = await ApiService.deleteCustomerAccount(req.params.token);
+    const apikey = req.headers["apikey"] as unknown as string;
+    const response = await ApiService.deleteCustomerAccount(apikey);
     res.send(response);
     return;
   } catch (error) {
