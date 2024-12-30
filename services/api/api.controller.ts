@@ -443,7 +443,7 @@ apiController.get("/security/:token", async (req, res, next) => {
  *    requestBody:
  *       required: true
  *       content:
- *         multipart/form-data:
+ *         application/json:
  *           schema:
  *             type: object
  *             properties:
