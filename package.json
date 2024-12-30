@@ -29,11 +29,18 @@
     "tsx": "^4.19.2",
     "typescript": "^5.7.2"
   },
+  "overrides": {
+    "glob": "^11.0.0"
+  },
   "devDependencies": {
     "@types/express": "^5.0.0",
     "@types/node": "^22.10.2",
     "@types/swagger-jsdoc": "^6.0.1",
-    "@types/swagger-ui-express": "^4.1.3",
-    "glob": "^11.0.0"
+    "@types/swagger-ui-express": "^4.1.3"
+  },
+  "pnpm": {
+    "overrides": {
+      "glob": "^11.0.0"
+    }
   }
 }

@@ -5,7 +5,7 @@ WORKDIR /api
 
 COPY package.json ./
 
-RUN yarn install
+RUN npm install
 #COPY prisma ./prisma
 #RUN npx prisma generate --schema=./prisma/schema.prisma
 
@@ -27,5 +27,5 @@ ENV PORT=3000
 ENV DATABASE_URL="mongodb://mongoserver:27017/local?retryWrites=false"
 
 
-CMD ["yarn", "run", "start"]
+CMD ["npm", "run", "start"]
 
