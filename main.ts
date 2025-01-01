@@ -41,7 +41,7 @@ morgan.token("ip", (req: Request) => {
 app.use(
   morgan(":ip :method :url :status - :response-time ms :body", {
     stream: {
-      write: (message) => logger.info(message.trim()), // Winston'a logları gönder
+      write: (message) => logger.info(message.trim()),
     },
   })
 );
