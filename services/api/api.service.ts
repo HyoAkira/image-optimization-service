@@ -34,19 +34,26 @@ export default class ApiService {
     }
   }
   // tckn, uuid ve username ile arar
-  static async getUser({ username }: Partial<UserDto>) {
+  static async getUser({ username, tckn, uuid }: Partial<UserDto>) {
+    // Dizilerden yalnızca dolu olanları seç
+    const validCriteria = [
+      username?.length && { username },
+      tckn?.length && { tckn },
+      uuid?.length && { uuid },
+    ].filter(Boolean);
+
+    // Eğer birden fazla kriter varsa hata döndür
+    if (validCriteria.length !== 1) {
+      throw { code: "too-many-data-getuser" };
+    }
+
+    // Kullanıcıları sorgula
     const user = await UserModel.findOne({
-      $or: [
-        {
-          username,
-        },
-        { tckn: username },
-        { uuid: username },
-      ],
+      $or: validCriteria, // `$or` içine kriterler dizisi geçiliyor
     });
 
     if (!user) throw { code: "user-not-exist" };
-
+    console.log(user);
     return user;
   }
   // static async getUserImageWithUUIDResponse(username) {
@@ -105,28 +112,27 @@ export default class ApiService {
       throw error;
     }
   }
-
-  static async getAllUsers(userList: string[]) {
+  static async getAllUsers(username: string[], tckn: string[], uuid: string[]) {
     try {
+      // Dizilerden yalnızca dolu olanları seç
+      const validCriteria = [
+        username?.length && { username: { $in: username } },
+        tckn?.length && { tckn: { $in: tckn } },
+        uuid?.length && { uuid: { $in: uuid } },
+      ].filter(Boolean);
+
+      // Eğer birden fazla kriter varsa hata döndür
+      if (validCriteria.length !== 1) {
+        throw { code: "too-many-data-getuser" };
+      }
+
+      // Kullanıcıları sorgula
       const users = await UserModel.find({
-        $or: [
-          {
-            username: {
-              $in: userList,
-            },
-          },
-          {
-            tckn: {
-              $in: userList,
-            },
-          },
-          {
-            uuid: {
-              $in: userList,
-            },
-          },
-        ],
+        $or: validCriteria, // `$or` içine kriterler dizisi geçiliyor
       });
+      if (users.length < 1) {
+        throw { code: "users-not-exist" };
+      }
       return users;
     } catch (error) {
       throw error;
