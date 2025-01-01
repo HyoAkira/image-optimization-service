@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request } from "express";
 import { config } from "dotenv";
 
 import errorHandler from "./middlewares/errorHandler";
@@ -8,11 +8,13 @@ import swaggerUi from "swagger-ui-express";
 import router from "./router/controller";
 import docsIPValidation from "./middlewares/docsIPValidation";
 import cors from "cors";
-
+import morgan from "morgan";
+import logger from "./middlewares/logger";
 config();
 
 const app = express();
 
+//database connection
 mongoose
   .connect(
     process.env.DATABASE_URL ||
@@ -26,6 +28,23 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
+morgan.token("body", (req: Request) => {
+  return JSON.stringify(req.body);
+});
+morgan.token("ip", (req: Request) => {
+  const requestIp =
+    (req.headers["x-forwarded-for"] as string) ||
+    req.ip ||
+    req.socket.remoteAddress;
+  return requestIp;
+});
+app.use(
+  morgan(":ip :method :url :status - :response-time ms :body", {
+    stream: {
+      write: (message) => logger.info(message.trim()), // Winston'a logları gönder
+    },
+  })
+);
 
 app.use(express.json({ limit: "150mb" })); // payload error fix
 app.use(
