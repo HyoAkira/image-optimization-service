@@ -230,8 +230,8 @@ apiController.put(
 
 apiController.post(`/users/`, async (req, res, next) => {
   try {
-    const userlist = req.body.usernames;
-    const users = await ApiService.getAllUsers(userlist);
+    const { username, tckn, uuid } = req.body;
+    const users = await ApiService.getAllUsers(username, tckn, uuid);
     const response = users.map((user) => {
       return {
         uuid: user.uuid,
@@ -284,8 +284,8 @@ apiController.post(`/users/`, async (req, res, next) => {
  */
 apiController.post(`/user_urls/`, async (req, res, next) => {
   try {
-    const userlist = req.body.usernames;
-    const users = await ApiService.getAllUsers(userlist);
+    const { username, tckn, uuid } = req.body;
+    const users = await ApiService.getAllUsers(username, tckn, uuid);
     const response = users.map((user) => {
       return {
         uuid: user.uuid,
@@ -339,46 +339,50 @@ apiController.delete("/delete/:username", async (req, res, next) => {
   }
   return;
 });
-/**
- * @swagger
- * /api/uniqueusers/{uuid}:
- *   get:
- *     tags:
- *      - api
- *     summary: "rastgele 1000 kullanıcı verir."
- *     description: "2 tane büyük işlem içerdiği için uzun sürer!"
- *     responses:
- *       200:
- *        description: "Olumlu yanit!"
- *       400:
- *        description: "yetkisiz islem!"
- *       500:
- *         description: "Sistem hatasi!"
- */
-apiController.get(`/uniqueusers/`, async (req, res, next) => {
-  try {
-    const usersnames = await ApiService.getUniqueNames(1000);
-    const userlist = usersnames.map((user) => user.username);
+//
+// /**
+//  * @swagger
+//  * /api/uniqueusers/{uuid}:
+//  *   get:
+//  *     tags:
+//  *      - api
+//  *     summary: "rastgele 1000 kullanıcı verir."
+//  *     description: "2 tane büyük işlem içerdiği için uzun sürer!"
+//  *     responses:
+//  *       200:
+//  *        description: "Olumlu yanit!"
+//  *       400:
+//  *        description: "yetkisiz islem!"
+//  *       500:
+//  *         description: "Sistem hatasi!"
+//  */
+// apiController.get(`/uniqueusers/`, async (req, res, next) => {
 
-    const users = await ApiService.getAllUsers(userlist);
-    const response = users.map((user) => {
-      return {
-        url: req.hostname + req.url + `/${user.username}`,
-        base64: user.image.toString("base64"),
-      };
-    });
+//     const usersnames = await ApiService.getUniqueNames(1000);
+//     const userlist = usersnames.map((user) => {return {
+//       username:user.username,
+//       tckn:user.tckn,
+//       uuid:user.uuid
+//     }});
+//     const users = await ApiService.getAllUsers(username, tckn, uuid);
+//     const response = users.map((user) => {
+//       return {
+//         url: req.hostname + req.url + `/${user.username}`,
+//         base64: user.image.toString("base64"),
+//       };
+//     });
 
-    res.send({
-      success: true,
-      message: "rastgele uyeler alindi!",
-      data: response,
-    });
-    return;
-  } catch (error) {
-    next(error);
-    return;
-  }
-});
+//     res.send({
+//       success: true,
+//       message: "rastgele uyeler alindi!",
+//       data: response,
+//     });
+//     return;
+//   } catch (error) {
+//     next(error);
+//     return;
+//   }
+// });
 /**
  * @swagger
  * /api/getrandomusernames:

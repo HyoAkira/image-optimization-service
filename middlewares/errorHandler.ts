@@ -10,7 +10,7 @@ export default function errorHandler(
   next: NextFunction
 ) {
   console.error(err.code);
-
+  console.error(err);
   switch (err.code) {
     case 11000: {
       const key = Object.keys(err.keyPattern)[0];
@@ -63,6 +63,14 @@ export default function errorHandler(
       next();
       break;
     }
+    case "users-not-exist": {
+      res
+        .status(404)
+        .send({ success: false, message: "Kullanıcı eşleşmesi bulunamadı!" });
+
+      next();
+      break;
+    }
     case "null-ip-data": {
       res.status(400).send({ success: false, message: "ip verisi eksik!" });
 
@@ -79,6 +87,14 @@ export default function errorHandler(
       res
         .status(400)
         .send({ success: false, message: "En az 1 adet ip adresi girilmeli!" });
+
+      break;
+    }
+    case "too-many-data-getuser": {
+      res.status(400).send({
+        success: false,
+        message: "Sadece tek bir alan ile sorgu atın.",
+      });
 
       break;
     }
