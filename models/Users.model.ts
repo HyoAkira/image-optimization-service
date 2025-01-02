@@ -6,6 +6,7 @@ export const userSchema = new Schema({
   tckn: { type: Schema.Types.String, unique: true },
   isPublic: { type: Schema.Types.Boolean, default: true },
   image: Schema.Types.Buffer,
+  imageHash: Schema.Types.String,
 });
 export type UserDto = InferSchemaType<typeof userSchema>;
 
