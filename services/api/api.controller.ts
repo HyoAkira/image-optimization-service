@@ -211,7 +211,7 @@ apiController.put(
  *          schema:
  *            type: object
  *            properties:
- *              usernames:
+ *              username:
  *                type: array
  *                items:
  *                  type: string
@@ -265,13 +265,13 @@ apiController.post(`/users/`, async (req, res, next) => {
  *          schema:
  *            type: object
  *            properties:
- *              usernames:
+ *              username:
  *                type: array
  *                items:
  *                  type: string
  *                description: "Gönderilen kullanıcı adlarının listesi."
  *            example:
- *              usernames:
+ *              username:
  *                - "Dorcas.Weimann16"
  *                - "122ae2e8-4513-4f9c-84d0-d9a8a70c01b3"
  *    responses:

@@ -3,6 +3,7 @@ import UserModel, { UserDto } from "@/models/Users.model";
 import compressionService from "../compression/compression.service";
 import crypto from "crypto";
 import SecurityModel from "@/models/security.model";
+import logger from "@/middlewares/logger";
 export default class ApiService {
   static async createUser({
     username,
@@ -12,10 +13,19 @@ export default class ApiService {
   }: Partial<UserDto> & { file: Express.Multer.File }) {
     try {
       let optimizedImage;
+      let imageHash;
       if (file.size > 50000) {
         optimizedImage = await compressionService(file.buffer);
       }
-
+      optimizedImage
+        ? (imageHash = crypto
+            .createHash("md5")
+            .update(optimizedImage)
+            .digest("hex"))
+        : (imageHash = crypto
+            .createHash("md5")
+            .update(file.buffer)
+            .digest("hex"));
       const uuid = crypto.randomUUID();
       // const hash = crypto.createHash("md5").update(uuid).digest("hex");
 
@@ -25,6 +35,7 @@ export default class ApiService {
         isPublic,
         tckn,
         uuid,
+        imageHash,
       });
 
       return user;
@@ -81,16 +92,34 @@ export default class ApiService {
       const user = await UserModel.findOne({ username });
       if (!user) throw { code: "user-not-exist" };
       let optimizedImage;
-      if (file.size > 50000) {
-        optimizedImage = await compressionService(file.buffer);
-      }
-      await user.updateOne({
-        image: optimizedImage ?? file.buffer,
+      const updateFields: {
+        username;
+        isPublic;
+        tckn;
+        uuid;
+        image?;
+        imageHash?;
+      } = {
         username,
         isPublic,
         tckn,
         uuid,
-      });
+      };
+
+      const imageHash = crypto
+        .createHash("md5")
+        .update(file.buffer)
+        .digest("hex");
+      const check = imageHash == user.imageHash;
+      if (!check) {
+        updateFields.image = optimizedImage ?? file.buffer;
+        updateFields.imageHash = imageHash;
+      }
+      if (file.size > 50000 && !check) {
+        optimizedImage = await compressionService(file.buffer);
+      }
+
+      await user.updateOne(updateFields);
 
       return user;
     } catch (error) {

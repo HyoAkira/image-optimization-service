@@ -1,3 +1,95 @@
 [01-01-25Y 23:47:18] INFO: 127.0.0.1 GET /users/37faf25e-6628-4eac-8be1-0c2088cc340d 304 - 29.517 ms {}
 [01-01-25Y 23:47:22] INFO: 127.0.0.1 GET /users/37faf25e-6628-4eac-8be1-0c2088cc340d 304 - 4.772 ms {}
 [01-01-25Y 23:48:30] INFO: 127.0.0.1 GET /users/37faf25e-6628-4eac-8be1-0c2088cc340d 304 - 31.716 ms {}
+[02-01-25Y 09:43:28] INFO: 127.0.0.1 GET / 200 - 3.031 ms {}
+[02-01-25Y 09:43:29] INFO: 127.0.0.1 GET /favicon.ico 404 - 0.531 ms {}
+[02-01-25Y 09:43:32] INFO: 127.0.0.1 GET /docs 301 - 38.896 ms {}
+[02-01-25Y 09:43:32] INFO: 127.0.0.1 GET /docs/ 200 - 3.558 ms {}
+[02-01-25Y 09:43:32] INFO: 127.0.0.1 GET /docs/swagger-ui-init.js 200 - 3.011 ms {}
+[02-01-25Y 09:43:32] INFO: 127.0.0.1 GET /docs/swagger-ui.css 200 - 9.222 ms {}
+[02-01-25Y 09:43:32] INFO: 127.0.0.1 GET /docs/swagger-ui-standalone-preset.js 200 - 9.203 ms {}
+[02-01-25Y 09:43:32] INFO: 127.0.0.1 GET /docs/swagger-ui-bundle.js 200 - 9.062 ms {}
+[02-01-25Y 09:43:33] INFO: 127.0.0.1 GET /docs/favicon-32x32.png 200 - 2.645 ms {}
+[02-01-25Y 09:45:10] INFO: 127.0.0.1 GET /docs/ 304 - 13.368 ms {}
+[02-01-25Y 09:45:10] INFO: 127.0.0.1 GET /docs/swagger-ui.css 304 - 6.320 ms {}
+[02-01-25Y 09:45:10] INFO: 127.0.0.1 GET /docs/swagger-ui-bundle.js 304 - 6.718 ms {}
+[02-01-25Y 09:45:10] INFO: 127.0.0.1 GET /docs/swagger-ui-standalone-preset.js 304 - 6.066 ms {}
+[02-01-25Y 09:45:10] INFO: 127.0.0.1 GET /docs/swagger-ui-init.js 200 - 4.457 ms {}
+[02-01-25Y 09:45:10] INFO: 127.0.0.1 GET /docs/favicon-32x32.png 304 - 2.471 ms {}
+[02-01-25Y 09:45:27] INFO: 127.0.0.1 POST /api/create 400 - 1.778 ms {}
+[02-01-25Y 09:45:36] INFO: 127.0.0.1 POST /api/create 200 - 102.130 ms {"username":"hyoakira","tckn":"1"}
+[02-01-25Y 09:47:16] INFO: 127.0.0.1 GET /users/%7Buuid%3A%22caad8a23-17e2-48d3-8aa0-65114ce64bfb%22%7D 404 - 20.319 ms {}
+[02-01-25Y 09:47:25] INFO: 127.0.0.1 GET /users/caad8a23-17e2-48d3-8aa0-65114ce64bfb 200 - 10.837 ms {}
+[02-01-25Y 09:49:24] INFO: 127.0.0.1 PUT /api/update 200 - 19.741 ms {"username":"hyoakira","tckn":"11111111111","isPublic":"true"}
+[02-01-25Y 09:52:19] INFO: 127.0.0.1 PUT /api/update 200 - 70.966 ms {"username":"hyoakira","tckn":"11111111111","isPublic":"true"}
+[02-01-25Y 09:52:26] INFO: 127.0.0.1 GET /users/caad8a23-17e2-48d3-8aa0-65114ce64bfb 200 - 4.780 ms {}
+[02-01-25Y 09:53:03] INFO: 127.0.0.1 POST /api/create 400 - 47.135 ms {"username":"hyoakira","tckn":"1"}
+[02-01-25Y 09:53:13] INFO: 127.0.0.1 PUT /api/update 200 - 51.675 ms {"username":"hyoakira","tckn":"11111111111","isPublic":"true"}
+[02-01-25Y 09:53:18] INFO: 127.0.0.1 GET /users/caad8a23-17e2-48d3-8aa0-65114ce64bfb 200 - 4.463 ms {}
+[02-01-25Y 09:53:59] INFO: 127.0.0.1 PUT /api/update 200 - 42.763 ms {"username":"hyoakira","tckn":"55555","isPublic":"true"}
+[02-01-25Y 09:54:04] INFO: 127.0.0.1 GET /users/caad8a23-17e2-48d3-8aa0-65114ce64bfb 304 - 4.916 ms {}
+[02-01-25Y 10:02:19] INFO: 127.0.0.1 PUT /api/update 200 - 67.821 ms {"username":"hyoakira","tckn":"55555","isPublic":"true"}
+[02-01-25Y 10:02:31] INFO: 127.0.0.1 PUT /api/update 200 - 45.236 ms {"username":"hyoakira","tckn":"55555","isPublic":"true"}
+[02-01-25Y 10:02:42] INFO: 127.0.0.1 GET /users/caad8a23-17e2-48d3-8aa0-65114ce64bfb 304 - 8.910 ms {}
+[02-01-25Y 10:02:55] INFO: 127.0.0.1 GET /docs/ 304 - 7.742 ms {}
+[02-01-25Y 10:02:55] INFO: 127.0.0.1 GET /docs/swagger-ui.css 304 - 5.639 ms {}
+[02-01-25Y 10:02:55] INFO: 127.0.0.1 GET /docs/swagger-ui-bundle.js 304 - 7.353 ms {}
+[02-01-25Y 10:02:55] INFO: 127.0.0.1 GET /docs/swagger-ui-init.js 304 - 2.530 ms {}
+[02-01-25Y 10:02:55] INFO: 127.0.0.1 GET /docs/swagger-ui-standalone-preset.js 304 - 5.646 ms {}
+[02-01-25Y 10:02:55] INFO: 127.0.0.1 GET /docs/favicon-32x32.png 304 - 3.505 ms {}
+[02-01-25Y 10:03:20] INFO: 127.0.0.1 PUT /api/update 200 - 39.376 ms {"username":"hyoakira","tckn":"11111111111","isPublic":"true"}
+[02-01-25Y 10:03:36] INFO: 127.0.0.1 GET /users/caad8a23-17e2-48d3-8aa0-65114ce64bfb 304 - 4.061 ms {}
+[02-01-25Y 10:04:16] INFO: 127.0.0.1 GET /users/caad8a23-17e2-48d3-8aa0-65114ce64bfb 304 - 22.607 ms {}
+[02-01-25Y 10:04:19] INFO: 127.0.0.1 PUT /api/update 200 - 48.698 ms {"username":"hyoakira","tckn":"11111111111","isPublic":"true"}
+[02-01-25Y 10:04:22] INFO: 127.0.0.1 GET /users/caad8a23-17e2-48d3-8aa0-65114ce64bfb 304 - 4.548 ms {}
+[02-01-25Y 10:04:39] INFO: 127.0.0.1 GET /users/caad8a23-17e2-48d3-8aa0-65114ce64bfb 304 - 15.690 ms {}
+[02-01-25Y 10:04:40] INFO: 127.0.0.1 GET /users/caad8a23-17e2-48d3-8aa0-65114ce64bfb 304 - 6.282 ms {}
+[02-01-25Y 10:04:40] INFO: 127.0.0.1 GET /users/caad8a23-17e2-48d3-8aa0-65114ce64bfb 304 - 4.792 ms {}
+[02-01-25Y 10:04:40] INFO: 127.0.0.1 GET /users/caad8a23-17e2-48d3-8aa0-65114ce64bfb 304 - 4.196 ms {}
+[02-01-25Y 10:04:49] INFO: 127.0.0.1 GET /users/caad8a23-17e2-48d3-8aa0-65114ce64bfb 304 - 7.023 ms {}
+[02-01-25Y 10:05:01] INFO: 127.0.0.1 GET /users/caad8a23-17e2-48d3-8aa0-65114ce64bfb 304 - 13.642 ms {}
+[02-01-25Y 10:05:04] INFO: 127.0.0.1 GET /users/caad8a23-17e2-48d3-8aa0-65114ce64bfb 304 - 5.724 ms {}
+[02-01-25Y 10:05:55] INFO: test
+[02-01-25Y 10:05:55] INFO: 127.0.0.1 PUT /api/update 200 - 82.518 ms {"username":"hyoakira","tckn":"11111111111","isPublic":"true"}
+[02-01-25Y 10:05:57] INFO: false
+[02-01-25Y 10:05:57] INFO: 127.0.0.1 PUT /api/update 200 - 60.626 ms {"username":"hyoakira","tckn":"11111111111","isPublic":"true"}
+[02-01-25Y 10:06:37] INFO: false
+[02-01-25Y 10:06:37] INFO: 127.0.0.1 PUT /api/update 200 - 57.794 ms {"username":"hyoakira","tckn":"11111111111","isPublic":"true"}
+[02-01-25Y 10:07:16] INFO: false
+[02-01-25Y 10:07:16] INFO: 127.0.0.1 PUT /api/update 200 - 60.370 ms {"username":"hyoakira","tckn":"11111111111","isPublic":"true"}
+[02-01-25Y 10:07:21] INFO: 127.0.0.1 GET /users/caad8a23-17e2-48d3-8aa0-65114ce64bfb 304 - 9.513 ms {}
+[02-01-25Y 10:07:59] INFO: false
+[02-01-25Y 10:07:59] INFO: 127.0.0.1 PUT /api/update 200 - 60.743 ms {"username":"hyoakira","tckn":"11111111111","isPublic":"true"}
+[02-01-25Y 10:07:59] INFO: false
+[02-01-25Y 10:07:59] INFO: 127.0.0.1 PUT /api/update 200 - 43.790 ms {"username":"hyoakira","tckn":"11111111111","isPublic":"true"}
+[02-01-25Y 10:07:59] INFO: false
+[02-01-25Y 10:07:59] INFO: 127.0.0.1 PUT /api/update 200 - 43.831 ms {"username":"hyoakira","tckn":"11111111111","isPublic":"true"}
+[02-01-25Y 10:07:59] INFO: false
+[02-01-25Y 10:08:00] INFO: 127.0.0.1 PUT /api/update 200 - 40.018 ms {"username":"hyoakira","tckn":"11111111111","isPublic":"true"}
+[02-01-25Y 10:08:00] INFO: false
+[02-01-25Y 10:08:00] INFO: 127.0.0.1 PUT /api/update 200 - 38.333 ms {"username":"hyoakira","tckn":"11111111111","isPublic":"true"}
+[02-01-25Y 10:08:00] INFO: false
+[02-01-25Y 10:08:00] INFO: 127.0.0.1 PUT /api/update 200 - 35.472 ms {"username":"hyoakira","tckn":"11111111111","isPublic":"true"}
+[02-01-25Y 10:08:03] INFO: 127.0.0.1 GET /users/caad8a23-17e2-48d3-8aa0-65114ce64bfb 304 - 7.179 ms {}
+[02-01-25Y 10:08:09] INFO: false
+[02-01-25Y 10:08:09] INFO: 127.0.0.1 PUT /api/update 200 - 6.751 ms {"username":"hyoakira","tckn":"11111111111","isPublic":"true"}
+[02-01-25Y 10:08:10] INFO: 127.0.0.1 GET /users/caad8a23-17e2-48d3-8aa0-65114ce64bfb 304 - 4.236 ms {}
+[02-01-25Y 10:08:51] INFO: false
+[02-01-25Y 10:08:51] INFO: 127.0.0.1 PUT /api/update 200 - 11.520 ms {"username":"hyoakira","tckn":"55551231","isPublic":"true"}
+[02-01-25Y 10:11:16] INFO: false
+[02-01-25Y 10:11:16] INFO: 127.0.0.1 PUT /api/update 200 - 38.104 ms {"username":"hyoakira","tckn":"55551231","isPublic":"true"}
+[02-01-25Y 10:11:17] INFO: true
+[02-01-25Y 10:11:17] INFO: 127.0.0.1 PUT /api/update 200 - 7.796 ms {"username":"hyoakira","tckn":"55551231","isPublic":"true"}
+[02-01-25Y 10:11:19] INFO: 127.0.0.1 GET /users/caad8a23-17e2-48d3-8aa0-65114ce64bfb 200 - 6.151 ms {}
+[02-01-25Y 10:11:39] INFO: 127.0.0.1 GET /users/caad8a23-17e2-48d3-8aa0-65114ce64bfb 304 - 4.770 ms {}
+[02-01-25Y 10:11:39] INFO: 127.0.0.1 GET /users/caad8a23-17e2-48d3-8aa0-65114ce64bfb 304 - 4.648 ms {}
+[02-01-25Y 10:11:49] INFO: true
+[02-01-25Y 10:11:49] INFO: 127.0.0.1 PUT /api/update 200 - 9.013 ms {"username":"hyoakira","tckn":"55551231","isPublic":"true"}
+[02-01-25Y 10:11:49] INFO: true
+[02-01-25Y 10:11:49] INFO: 127.0.0.1 PUT /api/update 200 - 7.028 ms {"username":"hyoakira","tckn":"55551231","isPublic":"true"}
+[02-01-25Y 10:11:49] INFO: true
+[02-01-25Y 10:11:49] INFO: 127.0.0.1 PUT /api/update 200 - 7.496 ms {"username":"hyoakira","tckn":"55551231","isPublic":"true"}
+[02-01-25Y 10:13:47] INFO: false
+[02-01-25Y 10:13:47] INFO: 127.0.0.1 PUT /api/update 200 - 99.720 ms {"username":"hyoakira","tckn":"55551231","isPublic":"true"}
+[02-01-25Y 10:13:52] INFO: true
+[02-01-25Y 10:13:52] INFO: 127.0.0.1 PUT /api/update 200 - 19.423 ms {"username":"hyoakira","tckn":"55551231","isPublic":"true"}
