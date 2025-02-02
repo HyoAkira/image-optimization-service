@@ -9,6 +9,11 @@ import dataValidationHandler from "@/middlewares/dataValidationHandler";
  * /users/:
  *   get:
  *     summary: "Yanlış işlem diye hata verir"
+ *     responses:
+ *       200:
+ *         description: "Olumlu yanit!"
+ *       400:
+ *         description: "yetkisiz islem!"
  */
 const userController = express.Router();
 userController.get("/", async (req, res) => {
@@ -21,7 +26,7 @@ userController.get("/", async (req, res) => {
 
 /**
  * @swagger
- * /users/{uuid}:
+ *  /users/{uuid}:
  *   get:
  *     tags:
  *      - default
